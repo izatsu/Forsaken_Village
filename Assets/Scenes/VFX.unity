@@ -237,31 +237,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2563353838403055544, guid: 8e2beb28c4eb7e840a82fdd27ca5309b,
-        type: 3}
-      propertyPath: RotationModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563353838403055544, guid: 8e2beb28c4eb7e840a82fdd27ca5309b,
-        type: 3}
-      propertyPath: RotationModule.x.scalar
-      value: 1.7453293
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563353838403055544, guid: 8e2beb28c4eb7e840a82fdd27ca5309b,
-        type: 3}
-      propertyPath: RotationModule.y.scalar
-      value: 1.7453293
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563353838403055544, guid: 8e2beb28c4eb7e840a82fdd27ca5309b,
-        type: 3}
-      propertyPath: RotationModule.curve.scalar
-      value: 1.7453293
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563353838403055544, guid: 8e2beb28c4eb7e840a82fdd27ca5309b,
-        type: 3}
-      propertyPath: RotationModule.separateAxes
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7260435642021156403, guid: 8e2beb28c4eb7e840a82fdd27ca5309b,
         type: 3}
       propertyPath: m_LocalPosition.x
