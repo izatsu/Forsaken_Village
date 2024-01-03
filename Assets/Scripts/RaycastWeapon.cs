@@ -42,6 +42,8 @@ public class RaycastWeapon : MonoBehaviour
         return (bullet.initialPostion) + (bullet.initialVelocity * bullet.time) + (0.5f * gravity * bullet.time * bullet.time);
     }
 
+
+    // Tạo đạn với vị trí ở nòng súng và bay theo hướng đã tính
     Bullet CreateBullet(Vector3 position, Vector3 velocity)
     {
         Bullet bullet = new Bullet();
@@ -52,6 +54,7 @@ public class RaycastWeapon : MonoBehaviour
         bullet.tracer.AddPosition(position);
         return bullet;
     }
+
 
     public void StartFiring()
     {
@@ -65,6 +68,8 @@ public class RaycastWeapon : MonoBehaviour
         isFiring = false;
     }
 
+
+    //Khi bắn gọi tạo đạn 
     private void FireBullet()
     {
         foreach (var p in muzzleFalsh)
@@ -77,13 +82,21 @@ public class RaycastWeapon : MonoBehaviour
         bullets.Add(bullet);
     }
 
+    // Tính toán trong 1s sẽ bắn ra bao nhiêu viên đạn
     public void UpdateFiring(float deltaTime)
     {
+        //Thời gian đếm
         accumulatedTime += Time.deltaTime;
+
+        //1 viên sẽ tốn bao nhiêu thời gian
         float fireInterval = 1.0f / fireRate;
+
+        // Nếu tời gian đếm > 0 thì có thể bắn ra đạn
         while (accumulatedTime >= 0f)
         {
             FireBullet();
+
+            //thời gian đếm trừ cho time cho ra 1 viên đạn để trong 1s không ra quá số đạn đã đề ra
             accumulatedTime -= fireInterval;
         }
     }
@@ -105,6 +118,7 @@ public class RaycastWeapon : MonoBehaviour
         });
     }
 
+    // Tính toán đến điểm đạn va chạm
     void RaycastSegment(Vector3 start, Vector3 end, Bullet bullet)
     {
         Vector3 direction = end - start;
@@ -127,6 +141,7 @@ public class RaycastWeapon : MonoBehaviour
             bullet.tracer.transform.position = end;
         }
     }
+
 
     void DestroyBullets()
     {
