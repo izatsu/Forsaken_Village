@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Move & Animation Move")]
-    [SerializeField] float moveSpeed;
     float horizontal;
     float vertical;
     Animator anim;
+    
 
     [Header("Camera")]
     private new Camera camPlayer;
@@ -26,12 +26,23 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     [SerializeField] float jumpForce = 5f;
 
+    [Header("Crouch")]
+    CapsuleCollider collider;
+    float colliderHeight;
+    float colliderCenterY;
+    float crouchHeight = 1.2f;
+    float crouchCenterY = 0.6f; 
+
     private void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        collider = GetComponent<CapsuleCollider>();
         Cursor.lockState = CursorLockMode.Locked;
         camPlayer = Camera.main;
+
+        colliderHeight = collider.height;
+        colliderCenterY = collider.center.y;
     }
 
     private void FixedUpdate()
@@ -58,10 +69,14 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isCrouch", false);
             anim.SetBool("isRun", true);
+            collider.height = colliderHeight;
+            collider.center = new Vector3(collider.center.x, colliderCenterY, collider.center.z);
         }
         else if (Input.GetKey(KeyCode.LeftControl))
         {
             anim.SetBool("isCrouch", true);
+            collider.height = crouchHeight;
+            collider.center = new Vector3 (collider.center.x, crouchCenterY, collider.center.z);
             anim.SetBool("isRun", false);
         }
 
@@ -69,6 +84,8 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isCrouch", false);
             anim.SetBool("isRun", false);
+            collider.height = colliderHeight;
+            collider.center = new Vector3(collider.center.x, colliderCenterY, collider.center.z);
         }
     }
 
