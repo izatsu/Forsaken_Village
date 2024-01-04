@@ -16,13 +16,12 @@ public class ActiveWeapon : MonoBehaviour
     private RaycastWeapon weapon;
 
     [Header("Animation use weapon")] 
-    Animator anim;
-    AnimatorOverrideController overrides;
-    
+    public Animator rigController;
+
+    bool isHolstered = true;
+
     void Start()
     {
-        anim = GetComponent<Animator> ();
-        overrides = anim.runtimeAnimatorController as AnimatorOverrideController;
         RaycastWeapon existWeapon = GetComponentInChildren<RaycastWeapon>();
         if (existWeapon)
         {
@@ -55,11 +54,12 @@ public class ActiveWeapon : MonoBehaviour
             }
             
         }
-        else
+
+        if(Input.GetKeyDown(KeyCode.X))
         {
-            HandIK.weight = 0;
-            anim.SetLayerWeight(1, 0f);
-        }
+            isHolstered = rigController.GetBool("holster_weapon");
+            rigController.SetBool("holster_weapon", !isHolstered);
+        }        
     }
 
     public void Equip(RaycastWeapon newWeapon)
@@ -74,26 +74,10 @@ public class ActiveWeapon : MonoBehaviour
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.identity;
 
-        HandIK.weight = 1f;
-        anim.SetLayerWeight(1, 1f);
-        Invoke(nameof(SetAnimationDelayed), 0.001f);
-        
+        Debug.Log("" + weapon.weaponName);
+        HandIK.weight = 1.0f;
+        rigController.Play($"equip_{weapon.weaponName}");
+
     }
 
-    void SetAnimationDelayed()
-    {
-        overrides["Weapon_anim_empty"] = weapon.weaponAnimation;
-    }
-
-    [ContextMenu("Save weapon pose")]
-    // Lưu vị trí weapon và vị trí tay cầm weapon vào animation
-    private void SaveWeaponPose()
-    {
-        GameObjectRecorder recorder = new GameObjectRecorder(gameObject);
-        recorder.BindComponentsOfType<Transform>(weaponParent.gameObject, false);
-        recorder.BindComponentsOfType<Transform>(weaponLeftGrip.gameObject, false);
-        recorder.BindComponentsOfType<Transform>(weaponRightGrip.gameObject, false);
-        recorder.TakeSnapshot(0f);
-        recorder.SaveToClip(weapon.weaponAnimation);
-    }
 }

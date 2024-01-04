@@ -101,16 +101,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFiring: 0
-  fireRate: 25
+  fireRate: 0
   bulletSpeed: 1000
-  bulletDrop: 0
+  bulletDrop: 10
   muzzleFalsh:
   - {fileID: 2397514985323583677}
   - {fileID: 4060168854970129507}
   hitEffect: {fileID: 2604867633426801649}
   tracerEffect: {fileID: 502877795797021618, guid: b7f9b5f4e7c719c4ebde63f85877db1a,
     type: 3}
-  weaponAnimation: {fileID: 7400000, guid: 4fcb9113110a48e46b46979ec40bbd36, type: 2}
+  weaponName: pistol
   raycastOrigin: {fileID: 189699348449470348}
   raycastDestination: {fileID: 0}
 --- !u!1 &1197964313819345982

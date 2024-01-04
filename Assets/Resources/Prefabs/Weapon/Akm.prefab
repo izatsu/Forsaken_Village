@@ -4826,7 +4826,7 @@ MonoBehaviour:
   hitEffect: {fileID: 1548682444695708558}
   tracerEffect: {fileID: 502877795797021618, guid: b7f9b5f4e7c719c4ebde63f85877db1a,
     type: 3}
-  weaponAnimation: {fileID: 7400000, guid: a4c557f8b9806364286b09b243a063a8, type: 2}
+  weaponName: rifle
   raycastOrigin: {fileID: 2194388329174513801}
   raycastDestination: {fileID: 0}
 --- !u!1 &4938586148831965144

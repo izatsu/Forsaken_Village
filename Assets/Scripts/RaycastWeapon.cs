@@ -25,7 +25,7 @@ public class RaycastWeapon : MonoBehaviour
     [SerializeField] TrailRenderer tracerEffect;
 
     [Header("Animation player with weapon")]
-    public AnimationClip weaponAnimation;
+    public string weaponName;
 
 
     [Header("Aim")]
