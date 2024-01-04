@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Animations;
 
 public class ActiveWeapon : MonoBehaviour
 {
@@ -8,20 +9,26 @@ public class ActiveWeapon : MonoBehaviour
     public UnityEngine.Animations.Rigging.Rig HandIK;
     public Transform weaponParent;
 
+    public Transform weaponRightGrip;
+    public Transform weaponLeftGrip;
+
     [Header("Shooting Raycast")]
     private RaycastWeapon weapon;
 
-
+    [Header("Animation use weapon")] 
+    Animator anim;
+    AnimatorOverrideController overrides;
     
     void Start()
     {
+        anim = GetComponent<Animator> ();
+        overrides = anim.runtimeAnimatorController as AnimatorOverrideController;
         RaycastWeapon existWeapon = GetComponentInChildren<RaycastWeapon>();
         if (existWeapon)
         {
             Equip(existWeapon);
         }
     }
-
 
     void Update()
     {
@@ -51,7 +58,7 @@ public class ActiveWeapon : MonoBehaviour
         else
         {
             HandIK.weight = 0;
-            Debug.Log("ha tay");
+            anim.SetLayerWeight(1, 0f);
         }
     }
 
@@ -68,5 +75,25 @@ public class ActiveWeapon : MonoBehaviour
         weapon.transform.localRotation = Quaternion.identity;
 
         HandIK.weight = 1f;
+        anim.SetLayerWeight(1, 1f);
+        Invoke(nameof(SetAnimationDelayed), 0.001f);
+        
+    }
+
+    void SetAnimationDelayed()
+    {
+        overrides["Weapon_anim_empty"] = weapon.weaponAnimation;
+    }
+
+    [ContextMenu("Save weapon pose")]
+    // Lưu vị trí weapon và vị trí tay cầm weapon vào animation
+    private void SaveWeaponPose()
+    {
+        GameObjectRecorder recorder = new GameObjectRecorder(gameObject);
+        recorder.BindComponentsOfType<Transform>(weaponParent.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(weaponLeftGrip.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(weaponRightGrip.gameObject, false);
+        recorder.TakeSnapshot(0f);
+        recorder.SaveToClip(weapon.weaponAnimation);
     }
 }

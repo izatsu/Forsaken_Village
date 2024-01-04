@@ -24,6 +24,11 @@ public class RaycastWeapon : MonoBehaviour
     [SerializeField] ParticleSystem hitEffect;
     [SerializeField] TrailRenderer tracerEffect;
 
+    [Header("Animation player with weapon")]
+    public AnimationClip weaponAnimation;
+
+
+    [Header("Aim")]
     // Fix aim gun
     public Transform raycastOrigin;
     public Transform raycastDestination;
