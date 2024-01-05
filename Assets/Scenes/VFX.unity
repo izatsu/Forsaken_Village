@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.21964398, g: 0.24923691, b: 0.3433962, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.04
@@ -386,6 +386,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: lucious tree (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1895,6 +1900,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: lucious tree (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2501,6 +2511,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: lucious tree (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2981,6 +2996,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: lucious tree (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3892,6 +3912,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: maple
+      objectReference: {fileID: 0}
+    - target: {fileID: 3028325033169091444, guid: 28f58ca6c0a7a47458f8570db994bd9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5490625669083099207, guid: 28f58ca6c0a7a47458f8570db994bd9d,
         type: 3}
@@ -5680,6 +5705,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: maple (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3028325033169091444, guid: 28f58ca6c0a7a47458f8570db994bd9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5490625669083099207, guid: 28f58ca6c0a7a47458f8570db994bd9d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5804,6 +5834,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: lucious tree
       objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5821,6 +5856,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: maple (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3028325033169091444, guid: 28f58ca6c0a7a47458f8570db994bd9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5490625669083099207, guid: 28f58ca6c0a7a47458f8570db994bd9d,
         type: 3}
@@ -6257,6 +6297,74 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 785520262}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &800331442
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2270703239350883810, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_Name
+      value: Vfx_FireFlies02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 262.62006
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.234
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 272.338
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894801807669085077, guid: 862a634b96ed11b4aab23ff33768b8b7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 862a634b96ed11b4aab23ff33768b8b7, type: 3}
 --- !u!4 &803140328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3465323176855478569, guid: 3a880605004e0504b99b47798b153f5f,
@@ -7978,6 +8086,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: lucious tree (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8120,6 +8233,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: lucious tree (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9091,6 +9209,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: maple (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3028325033169091444, guid: 28f58ca6c0a7a47458f8570db994bd9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5490625669083099207, guid: 28f58ca6c0a7a47458f8570db994bd9d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9312,6 +9435,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: maple (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3028325033169091444, guid: 28f58ca6c0a7a47458f8570db994bd9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5490625669083099207, guid: 28f58ca6c0a7a47458f8570db994bd9d,
         type: 3}
@@ -10113,6 +10241,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: maple
       objectReference: {fileID: 0}
+    - target: {fileID: 3028325033169091444, guid: 28f58ca6c0a7a47458f8570db994bd9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5490625669083099207, guid: 28f58ca6c0a7a47458f8570db994bd9d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10458,6 +10591,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: lucious tree (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11308,6 +11446,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: lucious tree
       objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11689,6 +11832,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1745132114
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 258.3851
+      objectReference: {fileID: 0}
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.73358417
+      objectReference: {fileID: 0}
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 262.32758
+      objectReference: {fileID: 0}
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355674330721102066, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946728807794136487, guid: 5699e67186b07a84fab6ce57c4796206,
+        type: 3}
+      propertyPath: m_Name
+      value: Vfx_FireFlies01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5699e67186b07a84fab6ce57c4796206, type: 3}
 --- !u!1001 &1746130131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12156,6 +12367,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: maple (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3028325033169091444, guid: 28f58ca6c0a7a47458f8570db994bd9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5490625669083099207, guid: 28f58ca6c0a7a47458f8570db994bd9d,
         type: 3}
@@ -13416,6 +13632,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: lucious tree (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13483,6 +13704,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: lucious tree (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277467181821098899, guid: 3a880605004e0504b99b47798b153f5f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14506,3 +14732,5 @@ SceneRoots:
   - {fileID: 1585603350}
   - {fileID: 862486031}
   - {fileID: 1736168104}
+  - {fileID: 1745132114}
+  - {fileID: 800331442}
