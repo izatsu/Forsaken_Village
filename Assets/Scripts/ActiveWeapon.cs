@@ -5,20 +5,22 @@ using UnityEditor.Animations;
 
 public class ActiveWeapon : MonoBehaviour
 {
-    public Transform crossHairTarget;
-    public UnityEngine.Animations.Rigging.Rig HandIK;
-    public Transform weaponParent;
+    public enum WeaponSlots
+    {
+        Primary = 0, 
+        Secondary = 1
+    }
 
-    public Transform weaponRightGrip;
-    public Transform weaponLeftGrip;
+    public Transform crossHairTarget;
+    //public UnityEngine.Animations.Rigging.Rig HandIK;
+    public Transform[] weaponSlots;
 
     [Header("Shooting Raycast")]
-    private RaycastWeapon weapon;
+    private RaycastWeapon[] equiped_Weapons = new RaycastWeapon[2];
+    int activeWeaponIndex; 
 
     [Header("Animation use weapon")] 
     public Animator rigController;
-
-    bool isHolstered = true;
 
     void Start()
     {
@@ -27,11 +29,13 @@ public class ActiveWeapon : MonoBehaviour
         {
             Equip(existWeapon);
         }
+        //HandIK.weight = 1.0f;
     }
 
     void Update()
     {
-        if (weapon != null) 
+        var weapon = Getweapon(activeWeaponIndex);
+        if (weapon) 
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -52,32 +56,82 @@ public class ActiveWeapon : MonoBehaviour
             {
                 weapon.StopFiring();
             }
-            
-        }
-
-        if(Input.GetKeyDown(KeyCode.X))
+        }    
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            isHolstered = rigController.GetBool("holster_weapon");
-            rigController.SetBool("holster_weapon", !isHolstered);
-        }        
+            SetActiveWeapon(WeaponSlots.Primary);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SetActiveWeapon(WeaponSlots.Secondary);
+        }
+    }
+
+    RaycastWeapon Getweapon(int index)
+    {
+        if (index < 0 || index >= equiped_Weapons.Length)
+        {
+            return null;
+        }
+        return equiped_Weapons[index];
     }
 
     public void Equip(RaycastWeapon newWeapon)
     {
+        int weaponSlotIndex =(int)newWeapon.weaponSlot;
+        var weapon = Getweapon(weaponSlotIndex);
         if (weapon)
         {
             Destroy(weapon.gameObject);
         }
         weapon = newWeapon;
         weapon.raycastDestination = crossHairTarget;
-        weapon.transform.parent = weaponParent;
-        weapon.transform.localPosition = Vector3.zero;
-        weapon.transform.localRotation = Quaternion.identity;
+        weapon.transform.SetParent(weaponSlots[weaponSlotIndex], false);
+        equiped_Weapons[weaponSlotIndex] = weapon;
 
-        Debug.Log("" + weapon.weaponName);
-        HandIK.weight = 1.0f;
-        rigController.Play($"equip_{weapon.weaponName}");
+        SetActiveWeapon(newWeapon.weaponSlot);
 
+    }
+
+    void SetActiveWeapon(WeaponSlots weaponSlot)
+    {
+        int activateIndex = (int)weaponSlot;
+        StartCoroutine(SwitchWeapon(activateIndex));
+    }
+
+    IEnumerator SwitchWeapon(int activateIndex)
+    {
+        if (equiped_Weapons[activateIndex] != null)
+        {
+            for (int i = 0; i < weaponSlots.Length; i++)
+            {
+                if (i != activateIndex)
+                {
+                    var otherWeapon = Getweapon(i);
+                    if (otherWeapon)
+                        otherWeapon.gameObject.SetActive(false);
+                }
+            }
+
+            yield return StartCoroutine(ActivateWeapon(activateIndex));
+            activeWeaponIndex = activateIndex;
+        }     
+    }
+
+    IEnumerator ActivateWeapon(int index)
+    {        
+        var weapon = Getweapon(index);
+        if (weapon)
+        {
+            weapon.gameObject.SetActive(true);
+            rigController.Play($"equip_{weapon.weaponName}");
+            do
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            while (rigController.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f);
+        }
     }
 
 }

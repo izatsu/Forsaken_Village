@@ -11,13 +11,19 @@ public class RaycastWeapon : MonoBehaviour
         public Vector3 initialPostion;
         public Vector3 initialVelocity;
         public TrailRenderer tracer;
+        public int bounce; 
     }
+
+    public ActiveWeapon.WeaponSlots weaponSlot;
 
     [Header("Bullet attack")]
     public bool isFiring = false;
     public int fireRate = 25;
     [SerializeField] float bulletSpeed = 1000;
     [SerializeField] float bulletDrop = 0;
+    [SerializeField] int maxBounce = 0;
+
+    public bool debug = false;
 
     [Header("Effect")]
     [SerializeField] ParticleSystem[] muzzleFalsh;
@@ -57,6 +63,7 @@ public class RaycastWeapon : MonoBehaviour
         bullet.time = 0f;
         bullet.tracer= Instantiate(tracerEffect, position, Quaternion.identity);
         bullet.tracer.AddPosition(position);
+        bullet.bounce = maxBounce;
         return bullet;
     }
 
@@ -140,6 +147,21 @@ public class RaycastWeapon : MonoBehaviour
 
             bullet.tracer.transform.position = hitInfo.point;
             bullet.time = maxLifeTime;
+            end = hitInfo.point;
+
+            if(bullet.bounce > 0)
+            {
+                bullet.time = 0;
+                bullet.initialPostion = hitInfo.point;
+                bullet.initialVelocity = Vector3.Reflect(bullet.initialVelocity, hitInfo.normal);
+                bullet.bounce--;
+            }
+
+            var rb2d = hitInfo.collider.GetComponent<Rigidbody>();
+            if (rb2d)
+            {
+                rb2d.AddForceAtPosition(ray.direction * 20, hitInfo.point, ForceMode.Impulse);
+            }
         }
         else
         {

@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce = 5f;
 
     [Header("Crouch")]
-    CapsuleCollider collider;
+    CapsuleCollider playerCollider;
     float colliderHeight;
     float colliderCenterY;
     float crouchHeight = 1.2f;
@@ -37,12 +37,12 @@ public class PlayerController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<CapsuleCollider>();
+        playerCollider = GetComponent<CapsuleCollider>();
         Cursor.lockState = CursorLockMode.Locked;
         camPlayer = Camera.main;
 
-        colliderHeight = collider.height;
-        colliderCenterY = collider.center.y;
+        colliderHeight = playerCollider.height;
+        colliderCenterY = playerCollider.center.y;
     }
 
     private void FixedUpdate()
@@ -69,14 +69,14 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isCrouch", false);
             anim.SetBool("isRun", true);
-            collider.height = colliderHeight;
-            collider.center = new Vector3(collider.center.x, colliderCenterY, collider.center.z);
+            playerCollider.height = colliderHeight;
+            playerCollider.center = new Vector3(playerCollider.center.x, colliderCenterY, playerCollider.center.z);
         }
         else if (Input.GetKey(KeyCode.LeftControl))
         {
             anim.SetBool("isCrouch", true);
-            collider.height = crouchHeight;
-            collider.center = new Vector3 (collider.center.x, crouchCenterY, collider.center.z);
+            playerCollider.height = crouchHeight;
+            playerCollider.center = new Vector3 (playerCollider.center.x, crouchCenterY, playerCollider.center.z);
             anim.SetBool("isRun", false);
         }
 
@@ -84,8 +84,8 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isCrouch", false);
             anim.SetBool("isRun", false);
-            collider.height = colliderHeight;
-            collider.center = new Vector3(collider.center.x, colliderCenterY, collider.center.z);
+            playerCollider.height = colliderHeight;
+            playerCollider.center = new Vector3(playerCollider.center.x, colliderCenterY, playerCollider.center.z);
         }
     }
 

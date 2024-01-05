@@ -5,8 +5,8 @@ using UnityEngine.Animations.Rigging;
 
 public class PlayerAiming : MonoBehaviour
 {
-    [Header("Animation Rigging Aim")]
-    [SerializeField] float aimDuration = 0.3f;
+    //[Header("Animation Rigging Aim")]
+    //[SerializeField] float aimDuration = 0.3f;
 
     private void Start()
     {
