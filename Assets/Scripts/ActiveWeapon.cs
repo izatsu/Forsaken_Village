@@ -11,7 +11,7 @@ public class ActiveWeapon : MonoBehaviour
         Secondary = 1
     }
 
-    public Transform crossHairTarget;
+    CrossHairTarget crossHairTarget;
     //public UnityEngine.Animations.Rigging.Rig HandIK;
     public Transform[] weaponSlots;
 
@@ -24,6 +24,7 @@ public class ActiveWeapon : MonoBehaviour
 
     void Start()
     {
+        crossHairTarget = FindObjectOfType<CrossHairTarget>();
         RaycastWeapon existWeapon = GetComponentInChildren<RaycastWeapon>();
         if (existWeapon)
         {
@@ -86,7 +87,7 @@ public class ActiveWeapon : MonoBehaviour
             Destroy(weapon.gameObject);
         }
         weapon = newWeapon;
-        weapon.raycastDestination = crossHairTarget;
+        weapon.raycastDestination = crossHairTarget.gameObject.transform;
         weapon.transform.SetParent(weaponSlots[weaponSlotIndex], false);
         equiped_Weapons[weaponSlotIndex] = weapon;
 

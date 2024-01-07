@@ -4818,9 +4818,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSlot: 0
   isFiring: 0
-  fireRate: 25
+  fireRate: 15
   bulletSpeed: 100
-  bulletDrop: 300
+  bulletDrop: 10
+  maxBounce: 0
+  debug: 0
   muzzleFalsh:
   - {fileID: 7045065031139272797}
   - {fileID: 6904337403951477636}

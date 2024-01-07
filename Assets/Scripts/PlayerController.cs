@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,7 +11,7 @@ public class PlayerController : MonoBehaviour
     float horizontal;
     float vertical;
     Animator anim;
-    
+
 
     [Header("Camera")]
     private new Camera camPlayer;
@@ -31,18 +34,26 @@ public class PlayerController : MonoBehaviour
     float colliderHeight;
     float colliderCenterY;
     float crouchHeight = 1.2f;
-    float crouchCenterY = 0.6f; 
+    float crouchCenterY = 0.6f;
+
+    [Header("Animation Rigging")]
+    [SerializeField] MultiAimConstraint[] body_multiAimConstraint;
+    [SerializeField]Transform lookAt;
+    [SerializeField] RigBuilder rig;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         playerCollider = GetComponent<CapsuleCollider>();
+        lookAt = FindObjectOfType<LookAt>().transform;
         Cursor.lockState = CursorLockMode.Locked;
         camPlayer = Camera.main;
 
         colliderHeight = playerCollider.height;
         colliderCenterY = playerCollider.center.y;
+
+        SetAimTarget(lookAt);
     }
 
     private void FixedUpdate()
@@ -76,7 +87,7 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isCrouch", true);
             playerCollider.height = crouchHeight;
-            playerCollider.center = new Vector3 (playerCollider.center.x, crouchCenterY, playerCollider.center.z);
+            playerCollider.center = new Vector3(playerCollider.center.x, crouchCenterY, playerCollider.center.z);
             anim.SetBool("isRun", false);
         }
 
@@ -129,5 +140,18 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
+    }
+
+    void SetAimTarget(Transform lookAt)
+    {
+        for(int i = 0;i < body_multiAimConstraint.Length;i++)
+        {
+            var data = body_multiAimConstraint[i].data.sourceObjects;
+            data.Clear();
+            data.Add(new WeightedTransform(lookAt, 1));
+            body_multiAimConstraint[i].data.sourceObjects = data;
+            
+        }
+        rig.Build();
     }
 }
