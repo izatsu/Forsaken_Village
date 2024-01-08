@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4935218552630523675}
   - component: {fileID: 75067588324311505}
   - component: {fileID: 5132999237179713807}
+  - component: {fileID: 1117422654124437424}
+  - component: {fileID: 5106369362717448284}
   m_Layer: 0
   m_Name: pistol
   m_TagString: Untagged
@@ -106,16 +108,85 @@ MonoBehaviour:
   bulletSpeed: 1000
   bulletDrop: 10
   maxBounce: 0
-  debug: 0
   muzzleFalsh:
-  - {fileID: 2397514985323583677}
-  - {fileID: 4060168854970129507}
-  hitEffect: {fileID: 2604867633426801649}
+  - {fileID: 0}
+  - {fileID: 0}
+  hitEffect: {fileID: 0}
   tracerEffect: {fileID: 502877795797021618, guid: b7f9b5f4e7c719c4ebde63f85877db1a,
     type: 3}
   weaponName: pistol
-  raycastOrigin: {fileID: 189699348449470348}
+  raycastOrigin: {fileID: 0}
   raycastDestination: {fileID: 0}
+  recoil: {fileID: 0}
+--- !u!114 &1117422654124437424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040869743834770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9de3713d70ff874ebbfb7d013696883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 0}
+  cameraShake: {fileID: 0}
+  verticalRecoil: 5
+  duration: 0.1
+--- !u!114 &5106369362717448284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040869743834770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 3
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 11400000, guid: 3ca83de2d1804cb45bff6270827085ca, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &1197964313819345982
 GameObject:
   m_ObjectHideFlags: 0

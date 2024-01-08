@@ -14793,7 +14793,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
-  verticalRecoil: 3.5
+  cameraShake: {fileID: 0}
+  verticalRecoil: 3
+  duration: 0.1
 --- !u!1 &8302198672266070676
 GameObject:
   m_ObjectHideFlags: 0

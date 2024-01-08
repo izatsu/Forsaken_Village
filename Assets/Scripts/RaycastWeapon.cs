@@ -37,7 +37,7 @@ public class RaycastWeapon : MonoBehaviour
     [HideInInspector]public Transform raycastDestination;
 
     [Header("Recoil")] 
-    public WeaponRecoil recoil;
+    [HideInInspector]public WeaponRecoil recoil;
     
 
     Ray _ray;
@@ -79,6 +79,7 @@ public class RaycastWeapon : MonoBehaviour
         isFiring = true;
         _accumulatedTime = 0f;
         FireBullet();
+        
     }
 
     public void StopFiring()
@@ -99,7 +100,7 @@ public class RaycastWeapon : MonoBehaviour
         var bullet = CreateBullet(raycastOrigin.position, velocity);
         _bullets.Add(bullet);
 
-        recoil.GenerateRecoil();
+        recoil.GenerateRecoil(weaponName);
     }
 
     // Tính toán trong 1s sẽ bắn ra bao nhiêu viên đạn
