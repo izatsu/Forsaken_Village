@@ -1,8 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Animations;
-
 public class ActiveWeapon : MonoBehaviour
 {
     public enum WeaponSlots
@@ -11,20 +8,23 @@ public class ActiveWeapon : MonoBehaviour
         Secondary = 1
     }
 
-    CrossHairTarget crossHairTarget;
+    CrossHairTarget _crossHairTarget;
     //public UnityEngine.Animations.Rigging.Rig HandIK;
     public Transform[] weaponSlots;
 
     [Header("Shooting Raycast")]
-    private RaycastWeapon[] equiped_Weapons = new RaycastWeapon[2];
-    int activeWeaponIndex; 
+    private RaycastWeapon[] _equipedWeapons = new RaycastWeapon[2];
+    int _activeWeaponIndex; 
 
     [Header("Animation use weapon")] 
     public Animator rigController;
 
+    [Header("Weapon Recoil")]
+    public Cinemachine.CinemachineVirtualCamera playerCamera;
+
     void Start()
     {
-        crossHairTarget = FindObjectOfType<CrossHairTarget>();
+        _crossHairTarget = FindObjectOfType<CrossHairTarget>();
         RaycastWeapon existWeapon = GetComponentInChildren<RaycastWeapon>();
         if (existWeapon)
         {
@@ -35,7 +35,7 @@ public class ActiveWeapon : MonoBehaviour
 
     void Update()
     {
-        var weapon = Getweapon(activeWeaponIndex);
+        var weapon = Getweapon(_activeWeaponIndex);
         if (weapon) 
         {
             if (Input.GetMouseButtonDown(0))
@@ -71,11 +71,11 @@ public class ActiveWeapon : MonoBehaviour
 
     RaycastWeapon Getweapon(int index)
     {
-        if (index < 0 || index >= equiped_Weapons.Length)
+        if (index < 0 || index >= _equipedWeapons.Length)
         {
             return null;
         }
-        return equiped_Weapons[index];
+        return _equipedWeapons[index];
     }
 
     public void Equip(RaycastWeapon newWeapon)
@@ -87,9 +87,10 @@ public class ActiveWeapon : MonoBehaviour
             Destroy(weapon.gameObject);
         }
         weapon = newWeapon;
-        weapon.raycastDestination = crossHairTarget.gameObject.transform;
+        weapon.raycastDestination = _crossHairTarget.gameObject.transform;
+        weapon.recoil.playerCamera = playerCamera;
         weapon.transform.SetParent(weaponSlots[weaponSlotIndex], false);
-        equiped_Weapons[weaponSlotIndex] = weapon;
+        _equipedWeapons[weaponSlotIndex] = weapon;
 
         SetActiveWeapon(newWeapon.weaponSlot);
 
@@ -103,7 +104,7 @@ public class ActiveWeapon : MonoBehaviour
 
     IEnumerator SwitchWeapon(int activateIndex)
     {
-        if (equiped_Weapons[activateIndex] != null)
+        if (_equipedWeapons[activateIndex] != null)
         {
             for (int i = 0; i < weaponSlots.Length; i++)
             {
@@ -116,7 +117,7 @@ public class ActiveWeapon : MonoBehaviour
             }
 
             yield return StartCoroutine(ActivateWeapon(activateIndex));
-            activeWeaponIndex = activateIndex;
+            _activeWeaponIndex = activateIndex;
         }     
     }
 

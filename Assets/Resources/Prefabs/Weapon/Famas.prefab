@@ -14675,6 +14675,7 @@ GameObject:
   - component: {fileID: 8721318779458685379}
   - component: {fileID: 617006273790331295}
   - component: {fileID: 7354249068280499587}
+  - component: {fileID: 3862824177118016506}
   m_Layer: 0
   m_Name: Famas
   m_TagString: Untagged
@@ -14769,7 +14770,6 @@ MonoBehaviour:
   bulletSpeed: 100
   bulletDrop: 10
   maxBounce: 0
-  debug: 0
   muzzleFalsh:
   - {fileID: 7691980845648917308}
   - {fileID: 1306334579985041307}
@@ -14779,6 +14779,21 @@ MonoBehaviour:
   weaponName: rifle
   raycastOrigin: {fileID: 8990827021088221231}
   raycastDestination: {fileID: 0}
+  recoil: {fileID: 0}
+--- !u!114 &3862824177118016506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7607925483978306590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9de3713d70ff874ebbfb7d013696883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 0}
+  verticalRecoil: 3.5
 --- !u!1 &8302198672266070676
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Camera")]
+    private Vector3 startingRotation;
     private new Camera camPlayer;
     [SerializeField] Transform viewPoint;
     Vector2 MouseInput;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] MultiAimConstraint[] body_multiAimConstraint;
     [SerializeField]Transform lookAt;
     [SerializeField] RigBuilder rig;
+
 
     private void Start()
     {
@@ -102,28 +104,17 @@ public class PlayerController : MonoBehaviour
 
     private void CameraRotation()
     {
-        // Lấy giá trị của mouse
-        MouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * moveSensitivity;
+        if (startingRotation == null)
+        {
+            startingRotation = transform.localRotation.eulerAngles;
+        }
 
-        //Set player xoay theo theo trục X của mouse
+        Vector2 deltaInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        startingRotation.x += deltaInput.x * moveSensitivity * Time.deltaTime;
+
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
-            transform.rotation.eulerAngles.y + MouseInput.x,
+            startingRotation.x,
             transform.rotation.eulerAngles.z);
-
-
-        verticalRotStore += MouseInput.y;
-
-        //Giới hạn góc nhìn mouse Y
-        verticalRotStore = Mathf.Clamp(verticalRotStore, -60f, 40f);
-
-        // Set góc nhìn trục Y 
-        viewPoint.rotation = Quaternion.Euler(
-        -verticalRotStore,
-        viewPoint.rotation.eulerAngles.y,
-        viewPoint.rotation.eulerAngles.z);
-
-        camPlayer.transform.SetLocalPositionAndRotation(viewPoint.position, viewPoint.rotation);
-
     }
 
     private bool CheckGround()
