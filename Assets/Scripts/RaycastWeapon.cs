@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RaycastWeapon : MonoBehaviour
 {
@@ -40,12 +41,19 @@ public class RaycastWeapon : MonoBehaviour
     [HideInInspector]public WeaponRecoil recoil;
     
 
-    Ray _ray;
-    RaycastHit _hitInfo;
-    float _accumulatedTime;
-    List<Bullet> _bullets = new List<Bullet>();
-    float maxLifeTime = 3;
+    private Ray _ray;
+    private RaycastHit _hitInfo;
+    private float _accumulatedTime;
+    private List<Bullet> _bullets = new List<Bullet>();
+    private float _maxLifeTime = 3;
 
+    [Header("Magazine")]
+    public GameObject magazine;
+
+    [Header("Bullet")] 
+    public int ammoCount;
+    public int clipSize;
+    [HideInInspector]public bool reloading= false;
     private void Awake()
     {
         recoil = GetComponent<WeaponRecoil>();
@@ -78,8 +86,6 @@ public class RaycastWeapon : MonoBehaviour
     {
         isFiring = true;
         _accumulatedTime = 0f;
-        FireBullet();
-        
     }
 
     public void StopFiring()
@@ -91,6 +97,12 @@ public class RaycastWeapon : MonoBehaviour
     //Khi bắn gọi tạo đạn 
     private void FireBullet()
     {
+        if (ammoCount <= 0 || reloading == true)
+        {
+            return;
+        }
+
+        ammoCount--; 
         foreach (var p in muzzleFalsh)
         {
             p.Emit(1);
@@ -155,7 +167,7 @@ public class RaycastWeapon : MonoBehaviour
             hitEffect.Emit(1);
 
             bullet.tracer.transform.position = _hitInfo.point;
-            bullet.time = maxLifeTime;
+            bullet.time = _maxLifeTime;
             end = _hitInfo.point;
 
             if(bullet.bounce > 0)
@@ -181,6 +193,6 @@ public class RaycastWeapon : MonoBehaviour
 
     void DestroyBullets()
     {
-        _bullets.RemoveAll(bullet => bullet.time >= maxLifeTime );
+        _bullets.RemoveAll(bullet => bullet.time >= _maxLifeTime );
     }
 }

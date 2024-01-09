@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 public class ActiveWeapon : MonoBehaviour
 {
     public enum WeaponSlots
@@ -21,6 +23,8 @@ public class ActiveWeapon : MonoBehaviour
 
     [Header("Weapon Recoil")]
     public Cinemachine.CinemachineVirtualCamera playerCamera;
+
+     
 
     void Start()
     {
@@ -69,6 +73,11 @@ public class ActiveWeapon : MonoBehaviour
         }
     }
 
+    public RaycastWeapon GetActiveWeapon()
+    {
+        return Getweapon(_activeWeaponIndex);
+    }
+
     RaycastWeapon Getweapon(int index)
     {
         if (index < 0 || index >= _equipedWeapons.Length)
@@ -105,7 +114,8 @@ public class ActiveWeapon : MonoBehaviour
 
     IEnumerator SwitchWeapon(int activateIndex)
     {
-        if (_equipedWeapons[activateIndex] != null)
+        var weapon = Getweapon(_activeWeaponIndex);
+        if ((_equipedWeapons[activateIndex] != null) &&  !weapon.reloading)
         {
             for (int i = 0; i < weaponSlots.Length; i++)
             {
@@ -134,6 +144,7 @@ public class ActiveWeapon : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
             while (rigController.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f);
+            
         }
     }
 
