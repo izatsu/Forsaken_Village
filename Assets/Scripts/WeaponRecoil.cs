@@ -22,9 +22,13 @@ public class WeaponRecoil : MonoBehaviour
 
     private void Start()
     {
+        
+    }
+    private void LateUpdate()
+    {
         _pov = playerCamera.GetCinemachineComponent<CinemachinePOV>();
     }
-    
+
     private void Update()
     {
         if (_time > 0)
