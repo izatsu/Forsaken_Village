@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
-
 public class ActiveWeapon : MonoBehaviour
 {
     public enum WeaponSlots
@@ -11,7 +9,7 @@ public class ActiveWeapon : MonoBehaviour
     }
 
     CrossHairTarget _crossHairTarget;
-    //public UnityEngine.Animations.Rigging.Rig HandIK;
+
     public Transform[] weaponSlots;
 
     [Header("Shooting Raycast")]
@@ -30,11 +28,12 @@ public class ActiveWeapon : MonoBehaviour
     {
         _crossHairTarget = FindObjectOfType<CrossHairTarget>();
         RaycastWeapon existWeapon = GetComponentInChildren<RaycastWeapon>();
+        
         if (existWeapon)
         {
+            _activeWeaponIndex =(int)existWeapon.weaponSlot;
             Equip(existWeapon);
         }
-        //HandIK.weight = 1.0f;
     }
 
     void Update()
@@ -101,7 +100,6 @@ public class ActiveWeapon : MonoBehaviour
         //weapon.recoil.rigController = rigController;
         weapon.transform.SetParent(weaponSlots[weaponSlotIndex], false);
         _equipedWeapons[weaponSlotIndex] = weapon;
-
         SetActiveWeapon(newWeapon.weaponSlot);
 
     }
@@ -115,6 +113,7 @@ public class ActiveWeapon : MonoBehaviour
     IEnumerator SwitchWeapon(int activateIndex)
     {
         var weapon = Getweapon(_activeWeaponIndex);
+        
         if ((_equipedWeapons[activateIndex] != null) &&  !weapon.reloading)
         {
             for (int i = 0; i < weaponSlots.Length; i++)
