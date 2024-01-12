@@ -54,6 +54,9 @@ public class RaycastWeapon : MonoBehaviour
     public int ammoCount;
     public int clipSize;
     [HideInInspector]public bool reloading= false;
+
+    [Header("PickItem")] 
+    public BoxCollider reach; 
     private void Awake()
     {
         recoil = GetComponent<WeaponRecoil>();

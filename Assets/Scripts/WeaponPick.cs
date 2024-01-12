@@ -7,7 +7,6 @@ public class WeaponPick : MonoBehaviour
 {
     private ActiveWeapon _activeWeapon;
     [SerializeField] private float distance = 10f;
-    private bool _canGrab;
     private void Start()
     {
         _activeWeapon = GetComponent<ActiveWeapon>();
@@ -18,7 +17,6 @@ public class WeaponPick : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             PickUp();
-            Debug.Log("da nhannn");
         }
     }
 
@@ -29,14 +27,8 @@ public class WeaponPick : MonoBehaviour
         {
             if (hitInfo.transform.tag == "canGrab")
             {
-                _canGrab = true;
-                Debug.Log("da nhat");
                 RaycastWeapon newWeaPon = Instantiate(hitInfo.transform.GetComponent<WeaponPickup>().weaponFab);
                 _activeWeapon.Equip(newWeaPon);
-            }
-            else
-            {
-                _canGrab = false;
             }
         }
     }
