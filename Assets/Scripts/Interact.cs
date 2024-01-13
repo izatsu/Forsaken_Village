@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Interact : MonoBehaviour
@@ -32,6 +33,8 @@ public class Interact : MonoBehaviour
             PickUpKey();
             PickUpBook();
             OpenDoor();
+            PutUpBook();
+            OpenChest();
         }
     }
 
@@ -79,6 +82,35 @@ public class Interact : MonoBehaviour
             }
         }
     }
+    
+    private void OpenChest()
+    {
+        RaycastHit hitInfo;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, _distance))
+        {
+            if (hitInfo.transform.tag == "Chest")
+            {
+                if (hitInfo.transform.GetComponent<Chest>().isLock)
+                {
+                    int idChest = hitInfo.transform.GetComponent<Chest>().idChest;
+                    foreach (var key  in keys)
+                    {
+                        if (key.id == idChest)
+                        {
+                            hitInfo.transform.GetComponent<Chest>().isLock = false;
+                            keys.Remove(key);
+                            break;
+                        }
+                    }
+                    hitInfo.transform.GetComponent<Chest>().inReach = true;
+                }
+                else
+                {
+                    hitInfo.transform.GetComponent<Door>().inReach = true;
+                }
+            }
+        }
+    }
 
     private void PickUpBook()
     {
@@ -91,6 +123,34 @@ public class Interact : MonoBehaviour
                 newBook.id = hitInfo.transform.GetComponent<PickUpItemID>().id; 
                 books.Add(newBook);
                 Destroy(hitInfo.transform.gameObject);
+            }
+        }
+    }
+
+    private void PutUpBook()
+    {
+        RaycastHit hitInfo;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, _distance))
+        {
+            if (hitInfo.transform.CompareTag("Pray"))
+            {
+                Debug.Log("Tương tác Pray");
+            
+                Pray prayComponent = hitInfo.transform.GetComponent<Pray>();
+                if (prayComponent != null)
+                {
+                    foreach (var book in books)
+                    {
+                        var matchingBook = prayComponent.books.FirstOrDefault(a => a.id == book.id);
+                        if (matchingBook != null)
+                        {
+                            prayComponent.countAcitveBook++;
+                            matchingBook.gameObject.SetActive(true);
+                            books.Remove(book);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }

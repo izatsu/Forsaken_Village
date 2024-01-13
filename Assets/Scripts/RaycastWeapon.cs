@@ -54,12 +54,16 @@ public class RaycastWeapon : MonoBehaviour
     public int ammoCount;
     public int clipSize;
     [HideInInspector]public bool reloading= false;
-
-    [Header("PickItem")] 
-    public BoxCollider reach; 
+    
+    [Header("Sound")] 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip soundFire;
+    
+    
     private void Awake()
     {
         recoil = GetComponent<WeaponRecoil>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     Vector3 GetPosition(Bullet bullet)
@@ -112,6 +116,7 @@ public class RaycastWeapon : MonoBehaviour
         }
 
         Vector3 velocity = (raycastDestination.position - raycastOrigin.position).normalized * bulletSpeed;
+        PlaySound(soundFire);
         var bullet = CreateBullet(raycastOrigin.position, velocity);
         _bullets.Add(bullet);
 
@@ -197,5 +202,11 @@ public class RaycastWeapon : MonoBehaviour
     void DestroyBullets()
     {
         _bullets.RemoveAll(bullet => bullet.time >= _maxLifeTime );
+    }
+
+    public void PlaySound(AudioClip audioClip)
+    {
+        _audioSource.clip = audioClip; 
+        _audioSource.Play();
     }
 }

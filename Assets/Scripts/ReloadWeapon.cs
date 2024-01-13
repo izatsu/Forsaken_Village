@@ -11,6 +11,8 @@ public class ReloadWeapon : MonoBehaviour
     public Transform leftHand;
     
     private GameObject _magazineHand;
+    
+    [SerializeField] private AudioClip soundReload;  
     private void Start()
     {
         animationEvents.weaponAnimationEvent.AddListener(OnAnimationEvent);
@@ -23,6 +25,7 @@ public class ReloadWeapon : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <= 0) && weapon.ammoCount != weapon.clipSize)
             {
+                weapon.PlaySound(soundReload);
                 rigController.SetTrigger("reload_Weapon");
                 
             }

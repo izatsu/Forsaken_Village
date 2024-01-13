@@ -11,6 +11,8 @@ TagManager:
   - Key
   - Door
   - Book
+  - Pray
+  - Chest
   layers:
   - Default
   - TransparentFX
