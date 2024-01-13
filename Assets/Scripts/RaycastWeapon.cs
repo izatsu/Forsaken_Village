@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RaycastWeapon : MonoBehaviour
 {
@@ -18,12 +18,10 @@ public class RaycastWeapon : MonoBehaviour
 
     [Header("Bullet attack")]
     public bool isFiring = false;
-    public int fireRate = 25;
+    [SerializeField] private int fireRate = 25;
     [SerializeField] float bulletSpeed = 1000;
     [SerializeField] float bulletDrop = 0;
     [SerializeField] int maxBounce = 0;
-
-    public bool debug = false;
 
     [Header("Effect")]
     [SerializeField] ParticleSystem[] muzzleFalsh;
@@ -37,13 +35,36 @@ public class RaycastWeapon : MonoBehaviour
     [Header("Aim")]
     // Fix aim gun
     public Transform raycastOrigin;
-    public Transform raycastDestination;
+    [HideInInspector]public Transform raycastDestination;
+
+    [Header("Recoil")] 
+    [HideInInspector]public WeaponRecoil recoil;
     
-    Ray ray;
-    RaycastHit hitInfo;
-    float accumulatedTime;
-    List<Bullet> bullets = new List<Bullet>();
-    float maxLifeTime = 3;
+
+    private Ray _ray;
+    private RaycastHit _hitInfo;
+    private float _accumulatedTime;
+    private List<Bullet> _bullets = new List<Bullet>();
+    private float _maxLifeTime = 3;
+
+    [Header("Magazine")]
+    public GameObject magazine;
+
+    [Header("Bullet")] 
+    public int ammoCount;
+    public int clipSize;
+    [HideInInspector]public bool reloading= false;
+    
+    [Header("Sound")] 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip soundFire;
+    
+    
+    private void Awake()
+    {
+        recoil = GetComponent<WeaponRecoil>();
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     Vector3 GetPosition(Bullet bullet)
     {
@@ -71,8 +92,7 @@ public class RaycastWeapon : MonoBehaviour
     public void StartFiring()
     {
         isFiring = true;
-        accumulatedTime = 0f;
-        FireBullet();
+        _accumulatedTime = 0f;
     }
 
     public void StopFiring()
@@ -84,32 +104,41 @@ public class RaycastWeapon : MonoBehaviour
     //Khi bắn gọi tạo đạn 
     private void FireBullet()
     {
+        if (ammoCount <= 0 || reloading == true)
+        {
+            return;
+        }
+
+        ammoCount--; 
         foreach (var p in muzzleFalsh)
         {
             p.Emit(1);
         }
 
         Vector3 velocity = (raycastDestination.position - raycastOrigin.position).normalized * bulletSpeed;
+        PlaySound(soundFire);
         var bullet = CreateBullet(raycastOrigin.position, velocity);
-        bullets.Add(bullet);
+        _bullets.Add(bullet);
+
+        recoil.GenerateRecoil(weaponName);
     }
 
     // Tính toán trong 1s sẽ bắn ra bao nhiêu viên đạn
     public void UpdateFiring(float deltaTime)
     {
         //Thời gian đếm
-        accumulatedTime += Time.deltaTime;
+        _accumulatedTime += Time.deltaTime;
 
         //1 viên sẽ tốn bao nhiêu thời gian
         float fireInterval = 1.0f / fireRate;
 
         // Nếu tời gian đếm > 0 thì có thể bắn ra đạn
-        while (accumulatedTime >= 0f)
+        while (_accumulatedTime >= 0f)
         {
             FireBullet();
-
+            //Recoil();
             //thời gian đếm trừ cho time cho ra 1 viên đạn để trong 1s không ra quá số đạn đã đề ra
-            accumulatedTime -= fireInterval;
+            _accumulatedTime -= fireInterval;
         }
     }
 
@@ -121,7 +150,7 @@ public class RaycastWeapon : MonoBehaviour
 
     void SimulateBullets(float detalTime)
     {
-        bullets.ForEach(bullet =>
+        _bullets.ForEach(bullet =>
         {
             Vector3 p0 = GetPosition(bullet);
             bullet.time += Time.deltaTime;
@@ -135,32 +164,32 @@ public class RaycastWeapon : MonoBehaviour
     {
         Vector3 direction = end - start;
         float distance = (end - start).magnitude;
-        ray.origin = start;
-        ray.direction = direction;
+        _ray.origin = start;
+        _ray.direction = direction;
 
-        if (Physics.Raycast(ray, out hitInfo, distance))
+        if (Physics.Raycast(_ray, out _hitInfo, distance))
         {
             //Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1.0f);
-            hitEffect.transform.position = hitInfo.point;
-            hitEffect.transform.forward = hitInfo.normal;
+            hitEffect.transform.position = _hitInfo.point;
+            hitEffect.transform.forward = _hitInfo.normal;
             hitEffect.Emit(1);
 
-            bullet.tracer.transform.position = hitInfo.point;
-            bullet.time = maxLifeTime;
-            end = hitInfo.point;
+            bullet.tracer.transform.position = _hitInfo.point;
+            bullet.time = _maxLifeTime;
+            end = _hitInfo.point;
 
             if(bullet.bounce > 0)
             {
                 bullet.time = 0;
-                bullet.initialPostion = hitInfo.point;
-                bullet.initialVelocity = Vector3.Reflect(bullet.initialVelocity, hitInfo.normal);
+                bullet.initialPostion = _hitInfo.point;
+                bullet.initialVelocity = Vector3.Reflect(bullet.initialVelocity, _hitInfo.normal);
                 bullet.bounce--;
             }
 
-            var rb2d = hitInfo.collider.GetComponent<Rigidbody>();
+            var rb2d = _hitInfo.collider.GetComponent<Rigidbody>();
             if (rb2d)
             {
-                rb2d.AddForceAtPosition(ray.direction * 20, hitInfo.point, ForceMode.Impulse);
+                rb2d.AddForceAtPosition(_ray.direction * 20, _hitInfo.point, ForceMode.Impulse);
             }
         }
         else
@@ -172,6 +201,12 @@ public class RaycastWeapon : MonoBehaviour
 
     void DestroyBullets()
     {
-        bullets.RemoveAll(bullet => bullet.time >= maxLifeTime );
+        _bullets.RemoveAll(bullet => bullet.time >= _maxLifeTime );
+    }
+
+    public void PlaySound(AudioClip audioClip)
+    {
+        _audioSource.clip = audioClip; 
+        _audioSource.Play();
     }
 }

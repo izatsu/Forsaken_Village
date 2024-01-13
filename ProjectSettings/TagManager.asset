@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Enemy
   - Win
+  - canGrab
+  - Reach
+  - Key
+  - Door
+  - Book
+  - Pray
+  - Chest
   layers:
   - Default
   - TransparentFX

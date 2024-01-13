@@ -1,155 +1,193 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.Intrinsics;
-using UnityEngine;
-using UnityEngine.Animations;
+﻿using UnityEngine;
 using UnityEngine.Animations.Rigging;
+
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Move & Animation Move")]
-    float horizontal;
-    float vertical;
-    Animator anim;
+    [SerializeField] private float groundSpeed; 
+    private CharacterController _characterController;
+    private Vector2 _input;
+    private float _horizontal;
+    private float _vertical;
+    private Animator _anim;
+    private Vector3 _rootMotion;
 
 
     [Header("Camera")]
-    private new Camera camPlayer;
-    [SerializeField] Transform viewPoint;
-    Vector2 MouseInput;
-    float verticalRotStore = 0;
+    private Vector3 _startingRotation;
+    [SerializeField] private Transform viewPoint;
+    private Vector2 _mouseInput;
     [SerializeField] private float moveSensitivity = 5f;
-
-    [Header("Check Ground")]
-    [SerializeField] LayerMask groundLayer;
-    [SerializeField] Transform GoundCheckPoint;
+    
     public bool isGrounded;
 
     [Header("Jump")]
-    Rigidbody rb;
-    [SerializeField] float jumpForce = 5f;
+    private Rigidbody _rb;
+    [SerializeField] private float jumpHeight = 5f;
+    [SerializeField] private float gravity;
+    [SerializeField] private float stepDowm;
+    [SerializeField] private float airControl;
+    [SerializeField] private float jumpDamp;
+    private bool _isJumping;
+    private Vector3 _velocity;
 
-    [Header("Crouch")]
-    CapsuleCollider playerCollider;
-    float colliderHeight;
-    float colliderCenterY;
-    float crouchHeight = 1.2f;
-    float crouchCenterY = 0.6f;
-
+    [Header("Crouch")] 
+    private bool _isCrouching = false;
+    private float _colliderHeight;
+    private float _colliderCenterY;
+    private float _crouchHeight = 1.2f;
+    private float _crouchCenterY = 0.6f;
+    
     [Header("Animation Rigging")]
-    [SerializeField] MultiAimConstraint[] body_multiAimConstraint;
-    [SerializeField]Transform lookAt;
-    [SerializeField] RigBuilder rig;
+    [SerializeField] private MultiAimConstraint[] bodyMultiAimConstraint;
+    [SerializeField] private Transform lookAt;
+    [SerializeField] private RigBuilder rig;
+
 
     private void Start()
     {
-        anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
-        playerCollider = GetComponent<CapsuleCollider>();
+        _anim = GetComponent<Animator>();
+        _rb = GetComponent<Rigidbody>();
+        _characterController = GetComponent<CharacterController>();
         lookAt = FindObjectOfType<LookAt>().transform;
         Cursor.lockState = CursorLockMode.Locked;
-        camPlayer = Camera.main;
 
-        colliderHeight = playerCollider.height;
-        colliderCenterY = playerCollider.center.y;
+        _colliderHeight = _characterController.height;
+        _colliderCenterY = _characterController.center.y;
 
         SetAimTarget(lookAt);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        PlayerMove();
-        Jump();
+        
+        _horizontal = Input.GetAxis("Horizontal");
+        _vertical = Input.GetAxis("Vertical");
+        _input = new Vector3(_horizontal, _vertical);
+
+        _anim.SetFloat("Horizontal", _horizontal);
+        _anim.SetFloat("Vertical", _vertical);
+        
+        UpdateRun();
+        UpdateCrouch();
+        
+        if (Input.GetKeyDown(KeyCode.Space) && !_isCrouching)
+        {
+            Jump();
+        }
+
+        if (!_isCrouching)
+        {
+            _characterController.height = _colliderHeight;
+            _characterController.center = new Vector3(_characterController.center.x, _colliderCenterY, _characterController.center.z);
+        }
     }
 
-
+    private void FixedUpdate()
+    {
+        if (_isJumping)
+        {
+            UpdateInAir();
+        }
+        else
+        {
+            UpdateOnGround();
+        }
+        //PlayerMove();
+    }
+    
     private void LateUpdate()
     {
         CameraRotation();
     }
 
-    private void PlayerMove()
+    private void UpdateOnGround()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+        Vector3 stepForWardAmount = _rootMotion * groundSpeed;
+        Vector3 stepDownAmount = Vector3.down * stepDowm;
+        _characterController.Move(stepForWardAmount + stepDownAmount);
+        _rootMotion = Vector3.zero;
+        if (!_characterController.isGrounded) 
+            SetInAir(0);
+    }
 
-        anim.SetFloat("Horizontal", horizontal);
-        anim.SetFloat("Vertical", vertical);
+    private void UpdateRun()
+    {
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        _anim.SetBool("isRun", isRunning);
+    }
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            anim.SetBool("isCrouch", false);
-            anim.SetBool("isRun", true);
-            playerCollider.height = colliderHeight;
-            playerCollider.center = new Vector3(playerCollider.center.x, colliderCenterY, playerCollider.center.z);
-        }
-        else if (Input.GetKey(KeyCode.LeftControl))
-        {
-            anim.SetBool("isCrouch", true);
-            playerCollider.height = crouchHeight;
-            playerCollider.center = new Vector3(playerCollider.center.x, crouchCenterY, playerCollider.center.z);
-            anim.SetBool("isRun", false);
-        }
+    private void UpdateCrouch()
+    {
+         _isCrouching = Input.GetKey(KeyCode.LeftControl);
+        _anim.SetBool("isCrouch", _isCrouching);
+        _characterController.height = _crouchHeight;
+        _characterController.center = new Vector3(_characterController.center.x, _crouchCenterY, _characterController.center.z);
+    }
 
-        else
-        {
-            anim.SetBool("isCrouch", false);
-            anim.SetBool("isRun", false);
-            playerCollider.height = colliderHeight;
-            playerCollider.center = new Vector3(playerCollider.center.x, colliderCenterY, playerCollider.center.z);
-        }
+    private void UpdateInAir()
+    {
+        _velocity.y -= gravity * Time.fixedDeltaTime;
+        Vector3 displacement = _velocity * Time.fixedDeltaTime;
+        displacement += CalculateAirControl();
+        _characterController.Move(displacement);
+        _isJumping = !_characterController.isGrounded;
+        _rootMotion = Vector3.zero;
+        _anim.SetBool("isJumping", _isJumping);
+    }
+    
+    
+    private void OnAnimatorMove()
+    {
+        _rootMotion += _anim.deltaPosition;
+    }
+
+    Vector3 CalculateAirControl()
+    {
+        return ((transform.forward * _input.y) + (transform.right * _input.x)) * (airControl/100); 
     }
 
     private void CameraRotation()
     {
-        // Lấy giá trị của mouse
-        MouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * moveSensitivity;
-
-        //Set player xoay theo theo trục X của mouse
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
-            transform.rotation.eulerAngles.y + MouseInput.x,
-            transform.rotation.eulerAngles.z);
-
-
-        verticalRotStore += MouseInput.y;
-
-        //Giới hạn góc nhìn mouse Y
-        verticalRotStore = Mathf.Clamp(verticalRotStore, -60f, 40f);
-
-        // Set góc nhìn trục Y 
-        viewPoint.rotation = Quaternion.Euler(
-        -verticalRotStore,
-        viewPoint.rotation.eulerAngles.y,
-        viewPoint.rotation.eulerAngles.z);
-
-        camPlayer.transform.SetLocalPositionAndRotation(viewPoint.position, viewPoint.rotation);
-
-    }
-
-    private bool CheckGround()
-    {
-        return isGrounded = Physics.Raycast(GoundCheckPoint.position, Vector3.down, 0.25f, groundLayer);
-    }
-
-    private void Jump()
-    {
-        //if (CheckGround()) anim.SetBool("isJump", false);
-        if (Input.GetButton("Jump") && CheckGround())
+        if (_startingRotation == null)
         {
-            //anim.SetBool("isJump", true);
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            _startingRotation = transform.localRotation.eulerAngles;
         }
 
+        Vector2 deltaInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        _startingRotation.x += deltaInput.x * moveSensitivity * Time.deltaTime;
+
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
+            _startingRotation.x,
+            transform.rotation.eulerAngles.z);
+    }
+    
+    private void Jump()
+    {
+        if (!_isJumping)
+        {
+            float jumpVelocity = Mathf.Sqrt(2 * gravity * jumpHeight);
+            SetInAir(jumpVelocity);
+        }
+    }
+
+    private void SetInAir(float jumpVelocity)
+    {
+        _isJumping = true;
+        _velocity = _anim.velocity * (jumpDamp * groundSpeed);
+        _velocity.y = jumpVelocity;
+        _anim.SetBool("isJumping", true);
     }
 
     void SetAimTarget(Transform lookAt)
     {
-        for(int i = 0;i < body_multiAimConstraint.Length;i++)
+        for(int i = 0;i < bodyMultiAimConstraint.Length;i++)
         {
-            var data = body_multiAimConstraint[i].data.sourceObjects;
+            var data = bodyMultiAimConstraint[i].data.sourceObjects;
             data.Clear();
             data.Add(new WeightedTransform(lookAt, 1));
-            body_multiAimConstraint[i].data.sourceObjects = data;
+            bodyMultiAimConstraint[i].data.sourceObjects = data;
             
         }
         rig.Build();
