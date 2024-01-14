@@ -17,7 +17,7 @@ public class Pray : MonoBehaviour
     {
         if (countAcitveBook == books.Length)
         {
-            Debug.Log("Da full");
+            //Debug.Log("Da full");
         }
     }
 }

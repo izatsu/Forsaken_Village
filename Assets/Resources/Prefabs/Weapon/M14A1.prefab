@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4791825234552140758}
   - component: {fileID: 171707101641769962}
   - component: {fileID: 4853206017074377622}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HitEffect (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4869,7 +4869,7 @@ GameObject:
   - component: {fileID: 2156031713664222718}
   - component: {fileID: 8628265969985513249}
   - component: {fileID: 2915270237578708407}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: M14A1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5155,7 +5155,7 @@ GameObject:
   - component: {fileID: 7278935678205730817}
   - component: {fileID: 4422276519546697543}
   - component: {fileID: 870303505761048390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: magazine_rifle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5232,7 +5232,7 @@ GameObject:
   - component: {fileID: 5114800514668708937}
   - component: {fileID: 1216199006628313133}
   - component: {fileID: 2015958700823933691}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: stanag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5315,7 +5315,7 @@ GameObject:
   - component: {fileID: 7667528033846528967}
   - component: {fileID: 6243565684024533022}
   - component: {fileID: 5088968013809616341}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9998,7 +9998,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2625273932804095509}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Raycast Origin (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10031,7 +10031,7 @@ GameObject:
   - component: {fileID: 6583914716361443976}
   - component: {fileID: 5176567923500068219}
   - component: {fileID: 2776703508190474226}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlashHeadon (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14931,7 +14931,7 @@ GameObject:
   - component: {fileID: 6220522512496449398}
   - component: {fileID: 2960374213757694035}
   - component: {fileID: 7978910845264896997}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Decal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19840,7 +19840,7 @@ GameObject:
   - component: {fileID: 2604573820188528707}
   - component: {fileID: 2582027971846173629}
   - component: {fileID: 1213943940853488965}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: stanag_follower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19923,7 +19923,7 @@ GameObject:
   - component: {fileID: 3456114978878264816}
   - component: {fileID: 2874845144182198899}
   - component: {fileID: 5252132683650991008}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MuzzleFlash01 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
