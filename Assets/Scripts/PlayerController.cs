@@ -19,8 +19,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform viewPoint;
     private Vector2 _mouseInput;
     [SerializeField] private float moveSensitivity = 5f;
-    
-    public bool isGrounded;
 
     [Header("Jump")]
     private Rigidbody _rb;
@@ -71,7 +69,6 @@ public class PlayerController : MonoBehaviour
         
         UpdateRun();
         UpdateCrouch();
-        
         if (Input.GetKeyDown(KeyCode.Space) && !_isCrouching)
         {
             Jump();
@@ -85,7 +82,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
+    { 
         if (_isJumping)
         {
             UpdateInAir();
@@ -94,7 +91,6 @@ public class PlayerController : MonoBehaviour
         {
             UpdateOnGround();
         }
-        //PlayerMove();
     }
     
     private void LateUpdate()

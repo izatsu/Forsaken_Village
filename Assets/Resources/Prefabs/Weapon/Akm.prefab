@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4561220789667603005}
   - component: {fileID: 2196947053930376671}
   - component: {fileID: 8753610189283398990}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4694,7 +4694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2194388329174513801}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Raycast Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4731,7 +4731,7 @@ GameObject:
   - component: {fileID: -3845888693862278286}
   - component: {fileID: -7251842896083042448}
   - component: {fileID: -4395218622739658455}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Akm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5017,7 +5017,7 @@ GameObject:
   - component: {fileID: 4587090026266408884}
   - component: {fileID: 6904337403951477636}
   - component: {fileID: 4096927583108321366}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlashHeadon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9917,7 +9917,7 @@ GameObject:
   - component: {fileID: 7048710988266550120}
   - component: {fileID: 1548682444695708558}
   - component: {fileID: 1779339190040954269}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14771,7 +14771,7 @@ GameObject:
   - component: {fileID: 4410248797861374823}
   - component: {fileID: 8815647774614424673}
   - component: {fileID: 702539937006418906}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Decal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19680,7 +19680,7 @@ GameObject:
   - component: {fileID: 1931897665416929503}
   - component: {fileID: 7045065031139272797}
   - component: {fileID: 2985553424172293935}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MuzzleFlash01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24577,10 +24577,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4607220502673577615}
     m_Modifications:
+    - target: {fileID: 2423049696053070584, guid: 0da80fb46cd24544e84732f5bcb560da,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6125752714530782562, guid: 0da80fb46cd24544e84732f5bcb560da,
         type: 3}
       propertyPath: m_Name
       value: magazine_rifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6125752714530782562, guid: 0da80fb46cd24544e84732f5bcb560da,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6125752714530782562, guid: 0da80fb46cd24544e84732f5bcb560da,
         type: 3}
@@ -24651,6 +24661,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760725757176702463, guid: 0da80fb46cd24544e84732f5bcb560da,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

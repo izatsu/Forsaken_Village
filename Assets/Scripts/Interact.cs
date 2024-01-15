@@ -20,6 +20,9 @@ public class Interact : MonoBehaviour
     public List<Key> keys;
     public List<Book> books;
 
+    [SerializeField] private int countKeys;
+    [SerializeField] private int countBooks;
+
     private void Start()
     {
         keys = new List<Key>();
@@ -38,6 +41,16 @@ public class Interact : MonoBehaviour
         }
     }
 
+    private void CountKey()
+    {
+        countKeys = keys.Count; 
+    }
+
+    private void CountBook()
+    {
+        countBooks = books.Count;
+    }
+
     private void PickUpKey()
     {
         RaycastHit hitInfo;
@@ -48,6 +61,7 @@ public class Interact : MonoBehaviour
                 Key newKey = new Key();
                 newKey.id = hitInfo.transform.GetComponent<PickUpItemID>().id; 
                 keys.Add(newKey);
+                CountKey();
                 Destroy(hitInfo.transform.gameObject);
             }
         }
@@ -70,6 +84,7 @@ public class Interact : MonoBehaviour
                             hitInfo.transform.GetComponent<Door>().isLock = false;
                             
                             keys.Remove(key);
+                            CountKey();
                             break;
                         }
                     }
@@ -99,6 +114,7 @@ public class Interact : MonoBehaviour
                         {
                             hitInfo.transform.GetComponent<Chest>().isLock = false;
                             keys.Remove(key);
+                            CountKey();
                             break;
                         }
                     }
@@ -122,6 +138,7 @@ public class Interact : MonoBehaviour
                 Book newBook = new Book();
                 newBook.id = hitInfo.transform.GetComponent<PickUpItemID>().id; 
                 books.Add(newBook);
+                CountBook();
                 Destroy(hitInfo.transform.gameObject);
             }
         }
@@ -147,6 +164,7 @@ public class Interact : MonoBehaviour
                             prayComponent.countAcitveBook++;
                             matchingBook.gameObject.SetActive(true);
                             books.Remove(book);
+                            CountBook();
                             break;
                         }
                     }
@@ -154,4 +172,6 @@ public class Interact : MonoBehaviour
             }
         }
     }
+    
+    
 }

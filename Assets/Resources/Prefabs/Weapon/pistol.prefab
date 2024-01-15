@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8678597446502211461}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: P_Pistol_Bulets_In_Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7937824366199124453}
   - component: {fileID: 1072491510131264607}
   - component: {fileID: 3852494839791350519}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MuzzleFlash01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4942,7 +4942,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4813527083989076357}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Raycast Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4979,7 +4979,7 @@ GameObject:
   - component: {fileID: 6775407133752622483}
   - component: {fileID: 7491007902530140068}
   - component: {fileID: 1613820795392350978}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5069,7 +5069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71493c58e7be238419fc0b8eda75f525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSlot: 1
+  weaponSlot: 0
   isFiring: 0
   fireRate: 0
   bulletSpeed: 1000
@@ -5089,7 +5089,6 @@ MonoBehaviour:
   ammoCount: 7
   clipSize: 7
   reloading: 0
-  reach: {fileID: 0}
   soundFire: {fileID: 8300000, guid: 5c55d967dce442244a6864b6e844c000, type: 3}
 --- !u!114 &6775407133752622483
 MonoBehaviour:
@@ -5267,7 +5266,7 @@ GameObject:
   - component: {fileID: 3416315009077847630}
   - component: {fileID: 7551661400496114691}
   - component: {fileID: 7932377670861284652}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Decal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10174,7 +10173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 489092150399160173}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: P_Pistol_Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10208,7 +10207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6107097800373277265}
   - component: {fileID: 6767736011645701064}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistol_Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10294,7 +10293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3246931188691913892}
   - component: {fileID: 8086517841794333620}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistol_Cartridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10351,7 +10350,7 @@ GameObject:
   - component: {fileID: 4708575860938564046}
   - component: {fileID: 6063143384552711102}
   - component: {fileID: 5339294960917955174}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlashHeadon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15249,7 +15248,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8231957330799009882}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: B_Pistol_Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15283,7 +15282,7 @@ GameObject:
   - component: {fileID: 953775523762098710}
   - component: {fileID: 444482922319691592}
   - component: {fileID: 840840550008846983}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19968,7 +19967,7 @@ GameObject:
   - component: {fileID: 1519797916062577654}
   - component: {fileID: 5074132947227399470}
   - component: {fileID: 4062336521112179507}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24824,7 +24823,7 @@ GameObject:
   - component: {fileID: 4434775773088246968}
   - component: {fileID: 147471117182647223}
   - component: {fileID: 4956397319156241943}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: reach
   m_TagString: Reach
   m_Icon: {fileID: 0}
@@ -24954,7 +24953,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6974084618188280351}
   - component: {fileID: 4377913297935384196}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistol_Bulets_In_Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25039,7 +25038,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1737699938555504342}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: B_Pistol_Bulets_In_Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
