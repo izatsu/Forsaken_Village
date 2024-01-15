@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 762266024034149001}
   - component: {fileID: 7017709274289128545}
   - component: {fileID: 7218964550721400804}
+  - component: {fileID: 992290043449765938}
   m_Layer: 0
   m_Name: Cube.013
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.08591744, y: 0.7001892, z: 0.70186764, w: 0.09866697}
   m_LocalPosition: {x: 7.29957, y: 0.42054114, z: 0.13658787}
-  m_LocalScale: {x: 510, y: 770, z: 10.9001}
+  m_LocalScale: {x: 510.00006, y: 770, z: 10.9001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,3 +84,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &992290043449765938
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6415197479732386480}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7807538432633192378, guid: e85609bd5693c904da5e1bbfbd03f864, type: 3}
