@@ -103,7 +103,7 @@ public class UIController : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         CloseAllScreen();
-        OpenScreen(mainScreen);
+        OpenScreen(createNicknameScreen);
     }
 
     // Chạy khi tạo phòng thất bại
@@ -116,8 +116,8 @@ public class UIController : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         CloseAllScreen();
-        OpenScreen(createNicknameScreen);
         ShowAllPLayer();
+        OpenScreen(roomDetailScreen);
         Debug.Log("Đã vào phòng");
     }
 
@@ -125,15 +125,9 @@ public class UIController : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         Debug.Log("Player mới vào phòng");
-        var namePlayer = Instantiate(textOneNickname, textOneNickname.transform.parent);
-        
-        namePlayer.text = newPlayer.NickName;
-        namePlayer.gameObject.SetActive(true);
-        
-        nicknames.Add(namePlayer);
-        //newPlayer.NickName = "Chao";
+        CloseAllScreen();
         ShowAllPLayer();
-        
+        OpenScreen(roomDetailScreen);
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
@@ -201,6 +195,12 @@ public class UIController : MonoBehaviourPunCallbacks
             MaxPlayers = 4
         };
         PhotonNetwork.CreateRoom(roomName, roomOptions);
+        
+        textRoomName.text = roomName; 
+        
+        
+        
+        OpenScreen(roomDetailScreen);
     }
 
     public void ButtonCreateNickname()
@@ -214,20 +214,8 @@ public class UIController : MonoBehaviourPunCallbacks
 
         PhotonNetwork.NickName = nickname;
         
-        
         CloseAllScreen();
-        ShowAllPLayer();
-        
-        textRoomName.text = PhotonNetwork.CurrentRoom.Name; 
-        
-        // Chủ phòng thì hiện nút start
-        if (PhotonNetwork.IsMasterClient)
-        {
-            buttonStartGame.SetActive(true);
-        }
-        else buttonStartGame.SetActive(false);
-        
-        OpenScreen(roomDetailScreen);
+        OpenScreen(mainScreen);
         
         Debug.Log("PLayer mới vào đã đặt tên");
         Debug.Log($"name newPlayer: {PhotonNetwork.NickName}");
@@ -238,6 +226,11 @@ public class UIController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         CloseAllScreen();
         OpenScreen(mainScreen);
+    }
+
+    public void ButtonStartGame()
+    {
+        PhotonNetwork.LoadLevel("TestMutilplayer");
     }
 
     public void ButtonJoinRoom()
@@ -255,6 +248,13 @@ public class UIController : MonoBehaviourPunCallbacks
     public void JoinRoom(RoomInfo roomInfo)
     {
         PhotonNetwork.JoinRoom(roomInfo.Name);
+        textRoomName.text = roomInfo.Name;
+        // Chủ phòng thì hiện nút start
+        if (PhotonNetwork.IsMasterClient)
+        {
+            buttonStartGame.SetActive(true);
+        }
+        else buttonStartGame.SetActive(false);
         CloseAllScreen();
     }
 

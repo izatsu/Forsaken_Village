@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Exit Games GmbH"/>
-// <summary>Demo code for Photon Chat in Unity.</summary>
-// <author>developer@exitgames.com</author>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Photon.Chat.Demo
