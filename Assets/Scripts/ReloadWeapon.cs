@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ReloadWeapon : MonoBehaviour
@@ -12,22 +14,30 @@ public class ReloadWeapon : MonoBehaviour
     
     private GameObject _magazineHand;
     
-    [SerializeField] private AudioClip soundReload;  
+    [SerializeField] private AudioClip soundReload;
+
+    private PhotonView _view; 
+    
     private void Start()
     {
+        _view = GetComponent<PhotonView>();
         animationEvents.weaponAnimationEvent.AddListener(OnAnimationEvent);
     }
 
     private void Update()
     {
-        RaycastWeapon weapon = activeWeapon.GetActiveWeapon();
-        if (weapon)
+        if (_view.IsMine)
         {
-            if ((Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <= 0) && weapon.ammoCount != weapon.clipSize)
+            RaycastWeapon weapon = activeWeapon.GetActiveWeapon();
+            if (weapon)
             {
-                weapon.PlaySound(soundReload);
-                rigController.SetTrigger("reload_Weapon");
+                if ((Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <= 0) && weapon.ammoCount != weapon.clipSize)
+                {
+                    weapon.PlaySound(soundReload);
+                    //rigController.SetTrigger("reload_Weapon");
+                    PlayReload();
                 
+                }
             }
         }
     }
@@ -55,6 +65,12 @@ public class ReloadWeapon : MonoBehaviour
                 CanFiring();
                 break;
         }
+    }
+
+    [PunRPC]
+    private void PlayReload()
+    {
+        rigController.SetTrigger("reload_Weapon");
     }
 
     private void StopFiring()
