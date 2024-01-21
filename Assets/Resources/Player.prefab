@@ -22822,7 +22822,7 @@ GameObject:
   - component: {fileID: 3206398787893967756}
   - component: {fileID: 2037391782701668583}
   - component: {fileID: 8342483002527761464}
-  - component: {fileID: -6331512750776924291}
+  - component: {fileID: 5290927607111446783}
   - component: {fileID: 3459963417976313689}
   - component: {fileID: 2096313242193738615}
   - component: {fileID: 7521795487619605166}
@@ -22928,7 +22928,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 4190886067759657026}
     m_Active: 1
   m_Effectors: []
---- !u!114 &-6331512750776924291
+--- !u!114 &5290927607111446783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22937,17 +22937,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6554899252870559232}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f894a2415a0367b4bb57692b3e884f59, type: 3}
+  m_Script: {fileID: 11500000, guid: c044abd8f0235fb498d85b97d7c25ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   groundSpeed: 2
-  viewPoint: {fileID: 0}
+  viewPoint: {fileID: 4036149447053030870}
   moveSensitivity: 200
-  jumpHeight: 2
+  jumpHeight: 3
   gravity: 30
   stepDowm: 0.1
   airControl: 2.5
-  jumpDamp: 0.25
+  jumpDamp: 1
   bodyMultiAimConstraint:
   - {fileID: 4863573354796471190}
   - {fileID: 2970163811519817227}
@@ -23014,6 +23014,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcdc22d65af5004a8651b176b4f5a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countKeys: 0
+  countBooks: 0
 --- !u!114 &5216582299772790982
 MonoBehaviour:
   m_ObjectHideFlags: 0
