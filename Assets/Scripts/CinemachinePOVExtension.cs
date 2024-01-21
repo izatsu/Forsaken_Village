@@ -1,11 +1,12 @@
 using UnityEngine;
 using Cinemachine;
+using Photon.Pun;
 public class CinemachinePovExtension : CinemachineExtension
 {
     [SerializeField]
-    private float horizontalSpeed = 10f;
+    private float horizontalSpeed = 180f;
     [SerializeField]
-    private float verticalSpeed = 10f;
+    private float verticalSpeed = 60f;
     [SerializeField] 
     private float clampAngle = 80f;
 
