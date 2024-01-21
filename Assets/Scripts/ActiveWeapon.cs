@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 public class ActiveWeapon : MonoBehaviour
 {
@@ -22,53 +23,58 @@ public class ActiveWeapon : MonoBehaviour
     [Header("Weapon Recoil")]
     public Cinemachine.CinemachineVirtualCamera playerCamera;
 
-     
+    private PhotonView _view;
 
     void Start()
     {
+        _view = GetComponent<PhotonView>();
         _crossHairTarget = FindObjectOfType<CrossHairTarget>();
         RaycastWeapon existWeapon = GetComponentInChildren<RaycastWeapon>();
-        
+
         if (existWeapon)
         {
-            _activeWeaponIndex =(int)existWeapon.weaponSlot;
+            _activeWeaponIndex = (int)existWeapon.weaponSlot;
             Equip(existWeapon);
         }
+
     }
 
     void Update()
     {
-        var weapon = Getweapon(_activeWeaponIndex);
-        if (weapon) 
+        if (_view.IsMine)
         {
-            if (Input.GetMouseButtonDown(0))
+            var weapon = Getweapon(_activeWeaponIndex);
+            if (weapon) 
             {
-                weapon.StartFiring();
-            }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    weapon.StartFiring();
+                }
 
-            // Nếu vẫn chưa ngừng giữ chuột bắn thì đạn tiếp tục bắn ra
-            if (weapon.isFiring)
-            {
-                weapon.UpdateFiring(Time.deltaTime);
-            }
+                // Nếu vẫn chưa ngừng giữ chuột bắn thì đạn tiếp tục bắn ra
+                if (weapon.isFiring)
+                {
+                    weapon.UpdateFiring(Time.deltaTime);
+                }
 
-            // Cập nhật đường đi, điểm chạm của đạn và xóa đạn khi va chạm
-            weapon.UpdateBullets(Time.deltaTime);
+                // Cập nhật đường đi, điểm chạm của đạn và xóa đạn khi va chạm
+                weapon.UpdateBullets(Time.deltaTime);
 
-            // Sau khi ngừng giữ chuột bắn thì sẽ dừng bắn
-            if (Input.GetMouseButtonUp(0))
-            {
-                weapon.StopFiring();
-            }
-        }    
+                // Sau khi ngừng giữ chuột bắn thì sẽ dừng bắn
+                if (Input.GetMouseButtonUp(0))
+                {
+                    weapon.StopFiring();
+                }
+            }    
         
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SetActiveWeapon(WeaponSlots.Primary);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetActiveWeapon(WeaponSlots.Secondary);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetActiveWeapon(WeaponSlots.Primary);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetActiveWeapon(WeaponSlots.Secondary);
+            }
         }
     }
 

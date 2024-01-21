@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Animations.Rigging;
-
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,14 +15,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 _rootMotion;
 
 
-    [Header("Camera")]
+    [Header("Camera")] 
     private Vector3 _startingRotation;
     [SerializeField] private Transform viewPoint;
     private Vector2 _mouseInput;
     [SerializeField] private float moveSensitivity = 5f;
 
     [Header("Jump")]
-    private Rigidbody _rb;
     [SerializeField] private float jumpHeight = 5f;
     [SerializeField] private float gravity;
     [SerializeField] private float stepDowm;
@@ -42,60 +42,76 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform lookAt;
     [SerializeField] private RigBuilder rig;
 
+    [Header("Photon")] 
+    private PhotonView _view;
+
+
+    private void Awake()
+    {
+        _view = GetComponent<PhotonView>();
+    }
 
     private void Start()
     {
         _anim = GetComponent<Animator>();
-        _rb = GetComponent<Rigidbody>();
         _characterController = GetComponent<CharacterController>();
         lookAt = FindObjectOfType<LookAt>().transform;
         Cursor.lockState = CursorLockMode.Locked;
-
         _colliderHeight = _characterController.height;
         _colliderCenterY = _characterController.center.y;
 
+        if(!_view.IsMine)
+            return;
         SetAimTarget(lookAt);
     }
 
     private void Update()
     {
-        
-        _horizontal = Input.GetAxis("Horizontal");
-        _vertical = Input.GetAxis("Vertical");
-        _input = new Vector3(_horizontal, _vertical);
-
-        _anim.SetFloat("Horizontal", _horizontal);
-        _anim.SetFloat("Vertical", _vertical);
-        
-        UpdateRun();
-        UpdateCrouch();
-        if (Input.GetKeyDown(KeyCode.Space) && !_isCrouching)
+        if (_view.IsMine)
         {
-            Jump();
-        }
+            _horizontal = Input.GetAxis("Horizontal");
+            _vertical = Input.GetAxis("Vertical");
+            _input = new Vector3(_horizontal, _vertical);
 
-        if (!_isCrouching)
-        {
-            _characterController.height = _colliderHeight;
-            _characterController.center = new Vector3(_characterController.center.x, _colliderCenterY, _characterController.center.z);
+            _anim.SetFloat("Horizontal", _horizontal);
+            _anim.SetFloat("Vertical", _vertical);
+        
+            UpdateRun();
+            UpdateCrouch();
+        
+            if (Input.GetKeyDown(KeyCode.Space) && !_isCrouching)
+            {
+                Jump();
+            }
+
+            if (!_isCrouching)
+            {
+                _characterController.height = _colliderHeight;
+                _characterController.center = new Vector3(_characterController.center.x, _colliderCenterY, _characterController.center.z);
+            }
         }
+        
     }
 
     private void FixedUpdate()
-    { 
-        if (_isJumping)
+    {
+        if (_view.IsMine)
         {
-            UpdateInAir();
-        }
-        else
-        {
-            UpdateOnGround();
+            if (_isJumping)
+            {
+                UpdateInAir();
+            }
+            else
+            {
+                UpdateOnGround();
+            }
         }
     }
     
     private void LateUpdate()
     {
-        CameraRotation();
+        if(_view.IsMine)
+            CameraRotation();
     }
 
     private void UpdateOnGround()
