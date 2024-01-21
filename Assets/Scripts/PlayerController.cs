@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using Photon.Pun;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,17 +14,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 _rootMotion;
 
 
-    [Header("Camera")] 
-    /*private Camera _camera;
-    [SerializeField] private Camera _camPrefab;*/
+    [Header("Camera")]
     private Vector3 _startingRotation;
     [SerializeField] private Transform viewPoint;
     private Vector2 _mouseInput;
     [SerializeField] private float moveSensitivity = 5f;
-    
-    public bool isGrounded;
 
     [Header("Jump")]
+    private Rigidbody _rb;
     [SerializeField] private float jumpHeight = 5f;
     [SerializeField] private float gravity;
     [SerializeField] private float stepDowm;
@@ -43,80 +39,63 @@ public class PlayerController : MonoBehaviour
     
     [Header("Animation Rigging")]
     [SerializeField] private MultiAimConstraint[] bodyMultiAimConstraint;
-    [SerializeField] private GameObject lookPrefab;
     [SerializeField] private Transform lookAt;
     [SerializeField] private RigBuilder rig;
 
-    [Header("Photon")] 
-    private PhotonView _view;
-
-
-    private void Awake()
-    {
-        _view = GetComponent<PhotonView>();
-    }
 
     private void Start()
     {
         _anim = GetComponent<Animator>();
+        _rb = GetComponent<Rigidbody>();
         _characterController = GetComponent<CharacterController>();
         lookAt = FindObjectOfType<LookAt>().transform;
         Cursor.lockState = CursorLockMode.Locked;
+
         _colliderHeight = _characterController.height;
         _colliderCenterY = _characterController.center.y;
 
-        if(!_view.IsMine)
-            return;
         SetAimTarget(lookAt);
     }
 
     private void Update()
     {
-        if (_view.IsMine)
+        
+        _horizontal = Input.GetAxis("Horizontal");
+        _vertical = Input.GetAxis("Vertical");
+        _input = new Vector3(_horizontal, _vertical);
+
+        _anim.SetFloat("Horizontal", _horizontal);
+        _anim.SetFloat("Vertical", _vertical);
+        
+        UpdateRun();
+        UpdateCrouch();
+        if (Input.GetKeyDown(KeyCode.Space) && !_isCrouching)
         {
-            _horizontal = Input.GetAxis("Horizontal");
-            _vertical = Input.GetAxis("Vertical");
-            _input = new Vector3(_horizontal, _vertical);
-
-            _anim.SetFloat("Horizontal", _horizontal);
-            _anim.SetFloat("Vertical", _vertical);
-        
-            UpdateRun();
-            UpdateCrouch();
-        
-            if (Input.GetKeyDown(KeyCode.Space) && !_isCrouching)
-            {
-                Jump();
-            }
-
-            if (!_isCrouching)
-            {
-                _characterController.height = _colliderHeight;
-                _characterController.center = new Vector3(_characterController.center.x, _colliderCenterY, _characterController.center.z);
-            }
+            Jump();
         }
-        
+
+        if (!_isCrouching)
+        {
+            _characterController.height = _colliderHeight;
+            _characterController.center = new Vector3(_characterController.center.x, _colliderCenterY, _characterController.center.z);
+        }
     }
 
     private void FixedUpdate()
-    {
-        if (_view.IsMine)
+    { 
+        if (_isJumping)
         {
-            if (_isJumping)
-            {
-                UpdateInAir();
-            }
-            else
-            {
-                UpdateOnGround();
-            }
+            UpdateInAir();
+        }
+        else
+        {
+            UpdateOnGround();
         }
     }
     
     private void LateUpdate()
     {
-        if(_view.IsMine)
-            CameraRotation();
+        CameraRotation();
     }
 
     private void UpdateOnGround()

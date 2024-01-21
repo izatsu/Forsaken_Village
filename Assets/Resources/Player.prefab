@@ -22822,7 +22822,7 @@ GameObject:
   - component: {fileID: 3206398787893967756}
   - component: {fileID: 2037391782701668583}
   - component: {fileID: 8342483002527761464}
-  - component: {fileID: 623374686262322858}
+  - component: {fileID: 9076366910098498435}
   - component: {fileID: 3459963417976313689}
   - component: {fileID: 2096313242193738615}
   - component: {fileID: 7521795487619605166}
@@ -22928,7 +22928,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 4190886067759657026}
     m_Active: 1
   m_Effectors: []
---- !u!114 &623374686262322858
+--- !u!114 &9076366910098498435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22937,27 +22937,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 6554899252870559232}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c044abd8f0235fb498d85b97d7c25ad1, type: 3}
+  m_Script: {fileID: 11500000, guid: f894a2415a0367b4bb57692b3e884f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundSpeed: 1.2
-  viewPoint: {fileID: 4036149447053030870}
-  moveSensitivity: 80
-  isGrounded: 0
-  jumpHeight: 2
-  gravity: 20
-  stepDowm: 0.1
-  airControl: 2.5
-  jumpDamp: 0.5
-  bodyMultiAimConstraint:
-  - {fileID: 4863573354796471190}
-  - {fileID: 2970163811519817227}
-  - {fileID: 8411561187859192781}
-  - {fileID: 7817227652178720535}
-  lookPrefab: {fileID: 5315546874439456187, guid: cd71bdb0dadffd34ba75dd56b346a126,
-    type: 3}
+  groundSpeed: 0
+  viewPoint: {fileID: 0}
+  moveSensitivity: 5
+  jumpHeight: 5
+  gravity: 0
+  stepDowm: 0
+  airControl: 0
+  jumpDamp: 0
+  bodyMultiAimConstraint: []
   lookAt: {fileID: 0}
-  rig: {fileID: 8342483002527761464}
+  rig: {fileID: 0}
 --- !u!114 &3459963417976313689
 MonoBehaviour:
   m_ObjectHideFlags: 0
