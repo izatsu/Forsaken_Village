@@ -22822,7 +22822,6 @@ GameObject:
   - component: {fileID: 3206398787893967756}
   - component: {fileID: 2037391782701668583}
   - component: {fileID: 8342483002527761464}
-  - component: {fileID: 9076366910098498435}
   - component: {fileID: 3459963417976313689}
   - component: {fileID: 2096313242193738615}
   - component: {fileID: 7521795487619605166}
@@ -22928,29 +22927,6 @@ MonoBehaviour:
   - m_Rig: {fileID: 4190886067759657026}
     m_Active: 1
   m_Effectors: []
---- !u!114 &9076366910098498435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6554899252870559232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f894a2415a0367b4bb57692b3e884f59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundSpeed: 0
-  viewPoint: {fileID: 0}
-  moveSensitivity: 5
-  jumpHeight: 5
-  gravity: 0
-  stepDowm: 0
-  airControl: 0
-  jumpDamp: 0
-  bodyMultiAimConstraint: []
-  lookAt: {fileID: 0}
-  rig: {fileID: 0}
 --- !u!114 &3459963417976313689
 MonoBehaviour:
   m_ObjectHideFlags: 0
