@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 public class ActiveWeapon : MonoBehaviour
 {
     public enum WeaponSlots
@@ -91,7 +93,7 @@ public class ActiveWeapon : MonoBehaviour
         }
         return _equipedWeapons[index];
     }
-
+    
     public void Equip(RaycastWeapon newWeapon)
     {
         int weaponSlotIndex =(int)newWeapon.weaponSlot;
@@ -119,6 +121,8 @@ public class ActiveWeapon : MonoBehaviour
     IEnumerator SwitchWeapon(int activateIndex)
     {
         var weapon = Getweapon(_activeWeaponIndex);
+
+        if (weapon == null) Debug.Log("Loi ne");
         
         if ((_equipedWeapons[activateIndex] != null) &&  !weapon.reloading)
         {
@@ -137,6 +141,7 @@ public class ActiveWeapon : MonoBehaviour
         }     
     }
 
+    
     IEnumerator ActivateWeapon(int index)
     {        
         var weapon = Getweapon(index);
@@ -153,4 +158,6 @@ public class ActiveWeapon : MonoBehaviour
         }
     }
 
+
+    
 }

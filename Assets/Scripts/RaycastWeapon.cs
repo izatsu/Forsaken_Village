@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Photon.Pun;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -58,12 +59,13 @@ public class RaycastWeapon : MonoBehaviour
     [Header("Sound")] 
     private AudioSource _audioSource;
     [SerializeField] private AudioClip soundFire;
-    
-    
+
+    private PhotonView _view;
     private void Awake()
     {
         recoil = GetComponent<WeaponRecoil>();
         _audioSource = GetComponent<AudioSource>();
+        _view = GetComponent<PhotonView>();
     }
 
     Vector3 GetPosition(Bullet bullet)
@@ -76,13 +78,15 @@ public class RaycastWeapon : MonoBehaviour
 
 
     // Tạo đạn với vị trí ở nòng súng và bay theo hướng đã tính
+    //[PunRPC]
     Bullet CreateBullet(Vector3 position, Vector3 velocity)
     {
         Bullet bullet = new Bullet();
         bullet.initialPostion = position;
         bullet.initialVelocity = velocity;
         bullet.time = 0f;
-        bullet.tracer= Instantiate(tracerEffect, position, Quaternion.identity);
+        GameObject trail = PhotonNetwork.Instantiate(tracerEffect.name, position, quaternion.identity,0);
+        bullet.tracer = trail.GetComponent<TrailRenderer>();
         bullet.tracer.AddPosition(position);
         bullet.bounce = maxBounce;
         return bullet;
@@ -110,10 +114,7 @@ public class RaycastWeapon : MonoBehaviour
         }
 
         ammoCount--; 
-        foreach (var p in muzzleFalsh)
-        {
-            p.Emit(1);
-        }
+        _view.RPC(nameof(MuzzelFlashGun), RpcTarget.All);
 
         Vector3 velocity = (raycastDestination.position - raycastOrigin.position).normalized * bulletSpeed;
         PlaySound(soundFire);
@@ -121,6 +122,15 @@ public class RaycastWeapon : MonoBehaviour
         _bullets.Add(bullet);
 
         recoil.GenerateRecoil(weaponName);
+    }
+    
+    [PunRPC]
+    private void MuzzelFlashGun()
+    {
+        foreach (var p in muzzleFalsh)
+        {
+            p.Emit(1);
+        }
     }
 
     // Tính toán trong 1s sẽ bắn ra bao nhiêu viên đạn
@@ -170,9 +180,7 @@ public class RaycastWeapon : MonoBehaviour
         if (Physics.Raycast(_ray, out _hitInfo, distance))
         {
             //Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1.0f);
-            hitEffect.transform.position = _hitInfo.point;
-            hitEffect.transform.forward = _hitInfo.normal;
-            hitEffect.Emit(1);
+            _view.RPC(nameof(HitEffect), RpcTarget.All);
 
             bullet.tracer.transform.position = _hitInfo.point;
             bullet.time = _maxLifeTime;
@@ -198,7 +206,15 @@ public class RaycastWeapon : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    private void HitEffect()
+    {
+        hitEffect.transform.position = _hitInfo.point;
+        hitEffect.transform.forward = _hitInfo.normal;
+        hitEffect.Emit(1);
+    }
 
+    [PunRPC]
     void DestroyBullets()
     {
         _bullets.RemoveAll(bullet => bullet.time >= _maxLifeTime );
