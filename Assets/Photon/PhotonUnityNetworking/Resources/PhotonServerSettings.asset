@@ -40,6 +40,23 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - PlayReload
+  - CreateBullet
+  - DestroyBullets
+  - MuzzelFlashGun
+  - HitEffect
+  - SyncPlayerRotation
+  - PickUp
+  - CreateWeapon
+  - Equip
+  - ActivateWeapon
+  - PlayAniEquipWeapon
+  - RpcActivateWeapon
+  - RpcEquip
+  - RpcSetActiveWeapon
+  - LightOnOff
+  - OffLight
+  - OnLight
+  - SetAim
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1

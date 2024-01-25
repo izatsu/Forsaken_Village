@@ -55,15 +55,25 @@ public class PlayerController : MonoBehaviour
     {
         _anim = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
-        lookAt = FindObjectOfType<LookAt>().transform;
+        
         Cursor.lockState = CursorLockMode.Locked;
         _colliderHeight = _characterController.height;
         _colliderCenterY = _characterController.center.y;
-
-        if(!_view.IsMine)
-            return;
+        
+        if (_view.IsMine)
+        {
+            lookAt = FindObjectOfType<LookAt>().transform;
+        }
+        _view.RPC(nameof(SetAim), RpcTarget.All);
+    }
+    
+    [PunRPC]
+    private void SetAim()
+    {
+        //lookAt = FindObjectOfType<LookAt>().transform;
         SetAimTarget(lookAt);
     }
+  
 
     private void Update()
     {
