@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 457142}
   - component: {fileID: 3393338}
   - component: {fileID: 2325728}
-  - component: {fileID: 6573398}
+  - component: {fileID: 6259691191224466273}
   m_Layer: 8
   m_Name: lo_Prop_SmallTable_A_LOD1
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6573398
-BoxCollider:
+--- !u!64 &6259691191224466273
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,9 +102,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5881537, y: 1.2126795, z: 0.5174784}
-  m_Center: {x: 0.00082470477, y: 0.6010242, z: 0.24138345}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 74088f6e691cf8545a0446010adcc943, type: 3}
 --- !u!1 &142902
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +117,7 @@ GameObject:
   - component: {fileID: 408016}
   - component: {fileID: 3371150}
   - component: {fileID: 2313160}
-  - component: {fileID: 6555428}
+  - component: {fileID: 7562484617364956978}
   m_Layer: 8
   m_Name: lo_Prop_SmallTable_A_LOD0
   m_TagString: Untagged
@@ -189,8 +190,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6555428
-BoxCollider:
+--- !u!64 &7562484617364956978
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -207,9 +208,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5881537, y: 1.2126795, z: 0.5174784}
-  m_Center: {x: 0.00082470477, y: 0.6010242, z: 0.24138345}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: 74088f6e691cf8545a0446010adcc943, type: 3}
 --- !u!1 &148580
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,11 +260,11 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.10248115
+  - screenRelativeHeight: 0.36281964
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2313160}
-  - screenRelativeHeight: 0.016953519
+  - screenRelativeHeight: 0.12094508
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2325728}

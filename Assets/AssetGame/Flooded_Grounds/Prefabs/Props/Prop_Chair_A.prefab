@@ -48,11 +48,11 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.25
+  - screenRelativeHeight: 0.39902925
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2355576}
-  - screenRelativeHeight: 0.017889535
+  - screenRelativeHeight: 0.1858266
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2382726}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 460074}
   - component: {fileID: 3363470}
   - component: {fileID: 2382726}
-  - component: {fileID: 6505384}
+  - component: {fileID: 3456304364904729028}
   m_Layer: 8
   m_Name: lo_Prop_Chair_A_LOD1
   m_TagString: Untagged
@@ -141,8 +141,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6505384
-BoxCollider:
+--- !u!64 &3456304364904729028
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -159,9 +159,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.68034685, y: 1.3078012, z: 0.6580485}
-  m_Center: {x: -0.25946027, y: 0.65125227, z: -0.0034901202}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 2c2b719936906794f83caf0dee03e40c, type: 3}
 --- !u!1 &179906
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +174,7 @@ GameObject:
   - component: {fileID: 433570}
   - component: {fileID: 3378898}
   - component: {fileID: 2355576}
-  - component: {fileID: 6571980}
+  - component: {fileID: 1168260773975551163}
   m_Layer: 8
   m_Name: lo_Prop_Chair_A_LOD0
   m_TagString: Untagged
@@ -246,8 +247,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6571980
-BoxCollider:
+--- !u!64 &1168260773975551163
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -264,6 +265,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.68034685, y: 1.3078012, z: 0.6580485}
-  m_Center: {x: -0.25946027, y: 0.65125227, z: -0.0034901202}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: 2c2b719936906794f83caf0dee03e40c, type: 3}
