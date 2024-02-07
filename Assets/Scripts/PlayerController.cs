@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using Photon.Pun;
 
@@ -16,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Camera")] 
+    [SerializeField] private PlayerCamera cam;
     private Vector3 _startingRotation;
     [SerializeField] private Transform viewPoint;
     private Vector2 _mouseInput;
@@ -59,22 +59,23 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         _colliderHeight = _characterController.height;
         _colliderCenterY = _characterController.center.y;
-        
-        if (_view.IsMine)
-        {
-            lookAt = FindObjectOfType<LookAt>().transform;
-        }
-        _view.RPC(nameof(SetAim), RpcTarget.All);
+
+        //if(_view.IsMine)
+            lookAt = cam.newCam.GetComponentInChildren<LookAt>().transform;
+        //_view.RPC(nameof(SetAim), RpcTarget.AllBuffered);
+        SetAimTarget(lookAt);
     }
-    
+
     [PunRPC]
     private void SetAim()
     {
-        //lookAt = FindObjectOfType<LookAt>().transform;
-        SetAimTarget(lookAt);
+        lookAt = cam.newCam.GetComponentInChildren<LookAt>().transform;
     }
-  
-
+    
+    
+    
+    
+    
     private void Update()
     {
         if (_view.IsMine)
@@ -120,9 +121,13 @@ public class PlayerController : MonoBehaviour
     
     private void LateUpdate()
     {
-        if(_view.IsMine)
+        if (_view.IsMine)
+        {
             CameraRotation();
+        }
+            
     }
+    
 
     private void UpdateOnGround()
     {
@@ -201,7 +206,7 @@ public class PlayerController : MonoBehaviour
         _velocity.y = jumpVelocity;
         _anim.SetBool("isJumping", true);
     }
-
+    
     void SetAimTarget(Transform lookAt)
     {
         for(int i = 0;i < bodyMultiAimConstraint.Length;i++)
