@@ -57,6 +57,25 @@ MonoBehaviour:
   - OffLight
   - OnLight
   - SetAim
+  - SetAimTarget
+  - IsLockDoor
+  - OpenCloseDoor
+  - PickUpKey
+  - OpenDoor
+  - DestroyObject
+  - OpenChest
+  - LockChest
+  - CreateCam
+  - UpdateLookAtPositionRPC
+  - CloseCinemachine
+  - OpenCinemachine
+  - CloseCam
+  - OpenCam
+  - UpdateLookAt
+  - SetRemoteAimTarget
+  - SyncLookAt
+  - SyncCameraPosition
+  - DestroyOb
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using UnityEngine;
 
 public class Interact : MonoBehaviour
@@ -23,21 +24,25 @@ public class Interact : MonoBehaviour
     [SerializeField] private int countKeys;
     [SerializeField] private int countBooks;
 
+    private PhotonView _view; 
+
     private void Start()
     {
+        _view = GetComponent<PhotonView>();
         keys = new List<Key>();
         books = new List<Book>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && _view.IsMine)
         {
-            PickUpKey();
+            _view.RPC(nameof(PickUpKey), RpcTarget.AllBuffered);
+            //PickUpKey();
             PickUpBook();
-            OpenDoor();
+            _view.RPC(nameof(OpenDoor), RpcTarget.AllBuffered);
             PutUpBook();
-            OpenChest();
+            _view.RPC(nameof(OpenChest), RpcTarget.AllBuffered);
         }
     }
 
@@ -50,7 +55,9 @@ public class Interact : MonoBehaviour
     {
         countBooks = books.Count;
     }
-
+    
+    
+    [PunRPC]
     private void PickUpKey()
     {
         RaycastHit hitInfo;
@@ -62,11 +69,20 @@ public class Interact : MonoBehaviour
                 newKey.id = hitInfo.transform.GetComponent<PickUpItemID>().id; 
                 keys.Add(newKey);
                 CountKey();
-                Destroy(hitInfo.transform.gameObject);
+                //Destroy(hitInfo.transform.gameObject);
+                hitInfo.transform.GetComponent<PickUpItemID>().DestroyObj();
+                //_view.RPC(nameof(DestroyObject), RpcTarget.OthersBuffered, hitInfo.transform.gameObject);
             }
         }
     }
 
+    [PunRPC]
+    private void DestroyObject(GameObject obj)
+    {
+        Destroy(obj);
+    } 
+    
+    [PunRPC]
     private void OpenDoor()
     {
         RaycastHit hitInfo;
@@ -98,6 +114,7 @@ public class Interact : MonoBehaviour
         }
     }
     
+    [PunRPC]
     private void OpenChest()
     {
         RaycastHit hitInfo;
