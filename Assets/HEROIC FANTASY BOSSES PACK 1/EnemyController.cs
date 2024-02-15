@@ -3,59 +3,76 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class EnemyController : MonoBehaviourPunCallbacks
 {
+
     [Header("Move Points")]
     [SerializeField] Transform[] movePoints;
 
     [Header("Vision Range")]
-    [SerializeField] float visionRange = 5;
-    [SerializeField] float returnTimeOutSize = 5;
+    [SerializeField] float visionRange = 5f;
+    [SerializeField] float returnTimeOutSize = 5f;
 
-    [Header("NavMeshAgent")]
+    [Header("Attack Settings")]
+    [SerializeField] float attackRange1 = 3f;
+    [SerializeField] float attackRange2 = 5f;
+    [SerializeField] float attackCooldown = 1f;
+
+    [Header("Field of View")]
+    [SerializeField] float fieldOfViewAngle = 90f;
+
+    [Header("Animation")]
+    [SerializeField] Animator animator;
+
+    [Header("LookAt Target")]
+    [SerializeField] LookAtTarget lookAtTargetScript;
+
     NavMeshAgent navMeshAgent;
-
     int currentMovePoint;
     bool playerInSight;
     float timePlayerLeftSight;
 
+    bool isAttacking;
+    float lastAttackTime;
+
     void Start()
     {
+        animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         currentMovePoint = Random.Range(0, movePoints.Length);
         SetNextDestination();
     }
 
-     public void Update()
-     {
-       /* if(!photonView.IsMine)
-        {
-            return;
-        }*/
-        // Ki?m tra xem enemy ?ã ??n g?n ?i?m ??n hay ch?a
+    void Update()
+    {
+        /*if (!photonView.IsMine)
+            return;*/
+
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 0.1f)
         {
             SetNextDestination();
-        }
+        }           
         if (PlayerInVisionRange())
         {
-            FollowPlayer();
+            playerInSight = true;
+            FollowOrAttackPlayer();
         }
-        else if(playerInSight)
+        else if (playerInSight)
         {
             PlayerLeftSight();
         }
     }
 
-    public void SetNextDestination()
+    void SetNextDestination()
     {
-        currentMovePoint = GetRandomMovePoints();
+        currentMovePoint = GetRandomMovePoint();
         Vector3 targetPosition = movePoints[currentMovePoint].position;
         navMeshAgent.SetDestination(targetPosition);
     }
 
-    private int GetRandomMovePoints()
+    int GetRandomMovePoint()
     {
         int newPoint = currentMovePoint;
         while (newPoint == currentMovePoint)
@@ -65,33 +82,46 @@ public class EnemyController : MonoBehaviourPunCallbacks
         return newPoint;
     }
 
-    private bool PlayerInVisionRange()
+    bool PlayerInVisionRange()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); // Tìm t?t c? các ng??i ch?i trong scene
+        //Tim tat ca gameobject co tag Player
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Debug.Log("Da tim");
 
         foreach (GameObject player in players)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) <= visionRange)
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance <= visionRange)
             {
-                RaycastHit hit;
-                if (Physics.Linecast(transform.position, player.transform.position, out hit))
+                Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+                float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+
+                // Kiem tra goc nhin cua enemy
+                if (angleToPlayer <= fieldOfViewAngle * 0.5f)
                 {
-                    if (hit.transform.CompareTag("Player"))
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRange))
                     {
-                        playerInSight = true;
-                        return true;
+                        if (hit.transform.CompareTag("Player"))
+                        {
+
+                            return true;
+                        }
                     }
                 }
             }
         }
         return false;
     }
-    private void FollowPlayer()
+
+    void FollowOrAttackPlayer()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); // Tìm t?t c? các ng??i ch?i trong scene
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         GameObject nearestPlayer = null;
+        // Tinh toan lay khoang cach cua player gan nhat de attack
         float minDistance = Mathf.Infinity;
 
+        //Chay vong lap de kiem tra player gan nhat
         foreach (GameObject player in players)
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -102,14 +132,62 @@ public class EnemyController : MonoBehaviourPunCallbacks
             }
         }
 
+        //Sau khi lay duoc player gan nhat thi tan cong
         if (nearestPlayer != null)
         {
-            navMeshAgent.SetDestination(nearestPlayer.transform.position);
+            if (minDistance <= attackRange1 && Time.time - lastAttackTime > attackCooldown)
+            {
+                Attack(1,nearestPlayer.transform);
+            }
+            else if (minDistance > attackRange1 && minDistance <= attackRange2)
+            {
+                Attack(2,nearestPlayer.transform);
+            }
+            else
+            {
+                navMeshAgent.SetDestination(nearestPlayer.transform.position);
+            }
         }
     }
-    private void PlayerLeftSight()
+
+    private void Attack(int attackType, Transform playerTransform)
     {
-        // N?u player r?i kh?i t?m nhìn, ??m th?i gian
+        if (!isAttacking)
+        {
+            isAttacking = true;
+            navMeshAgent.speed = 1;
+            StartCoroutine(AttackAnimationCoroutine(attackType,playerTransform));
+        }
+    }
+
+    IEnumerator AttackAnimationCoroutine(int attackType, Transform playerTransform)
+    {
+        if (attackType == 1)
+        {
+            animator.SetBool("Attack1", true);
+        }
+        else if (attackType == 2)
+        {
+            animator.SetBool("Attack2", true);
+        }
+
+        Quaternion targetRotation = Quaternion.LookRotation(playerTransform.position - transform.position);
+        lookAtTargetScript.SetTarget(playerTransform);
+
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
+
+        // Dat lai animation va tiep tuc di chuyen theo diem
+        animator.SetBool("Attack1", false);
+        animator.SetBool("Attack2", false);
+        isAttacking = false;
+        navMeshAgent.speed = 5;
+       // lastAttackTime = Time.time;
+        lookAtTargetScript.SetTarget(null);
+    }
+
+    void PlayerLeftSight()
+    {
+        // Kiem tra player roi khoi tam nhin
         timePlayerLeftSight += Time.deltaTime;
         if (timePlayerLeftSight >= returnTimeOutSize)
         {
