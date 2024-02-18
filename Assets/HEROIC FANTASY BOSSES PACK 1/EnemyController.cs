@@ -29,6 +29,12 @@ public class EnemyController : MonoBehaviourPunCallbacks
     [Header("LookAt Target")]
     [SerializeField] LookAtTarget lookAtTargetScript;
 
+    [Header("VFX Attack")]
+    [SerializeField] GameObject vfxAttackPrefab;
+    [SerializeField] Transform vfxTarget;
+    [SerializeField] GameObject vfxEnemySkill;
+    [SerializeField] Transform vfxEnemySkillTransform;
+
     NavMeshAgent navMeshAgent;
     int currentMovePoint;
     bool playerInSight;
@@ -155,7 +161,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
         if (!isAttacking)
         {
             isAttacking = true;
-            navMeshAgent.speed = 1;
+            navMeshAgent.isStopped = true;
             StartCoroutine(AttackAnimationCoroutine(attackType,playerTransform));
         }
     }
@@ -169,6 +175,13 @@ public class EnemyController : MonoBehaviourPunCallbacks
         else if (attackType == 2)
         {
             animator.SetBool("Attack2", true);
+            GameObject vfxSkill = Instantiate(vfxEnemySkill, vfxEnemySkillTransform.position, Quaternion.identity);
+            Destroy(vfxSkill, 2);
+            yield return new WaitForSeconds(1.8f);
+            GameObject attackVFX = Instantiate(vfxAttackPrefab, vfxTarget.position, Quaternion.identity);
+            attackVFX.transform.forward = transform.forward;
+            //GameObject attackVFX = Instantiate(vfxAttackPrefab, transform.position, Quaternion.identity);
+            Destroy(attackVFX, 5);
         }
 
         Quaternion targetRotation = Quaternion.LookRotation(playerTransform.position - transform.position);
@@ -180,7 +193,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
         animator.SetBool("Attack1", false);
         animator.SetBool("Attack2", false);
         isAttacking = false;
-        navMeshAgent.speed = 5;
+        navMeshAgent.isStopped = false;
        // lastAttackTime = Time.time;
         lookAtTargetScript.SetTarget(null);
     }
