@@ -53,6 +53,7 @@ public class PlayerState : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         gameObject.GetComponent<PlayerCamera>().newCam.SetActive(false);
+        dissolvingControllerTut.Revival();
         gameObject.SetActive(false);
     }
 
