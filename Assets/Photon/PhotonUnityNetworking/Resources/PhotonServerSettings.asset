@@ -76,6 +76,15 @@ MonoBehaviour:
   - SyncLookAt
   - SyncCameraPosition
   - DestroyOb
+  - PlayerDie
+  - DeadPlayer
+  - ResetPlayer
+  - DeadAction
+  - ResetPlayerDead
+  - AddPlayerList
+  - SetIsDie
+  - AnimationDead
+  - SetName
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

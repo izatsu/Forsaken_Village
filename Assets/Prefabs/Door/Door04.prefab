@@ -113,7 +113,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -7227667702008192685}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -292,6 +293,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 7a8d6bb394f243445b9377162ba792a8, type: 2}
+  - {fileID: 2100000, guid: ec5216171451b7c44bd78ca50aa729e8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

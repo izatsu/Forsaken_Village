@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using Photon.Pun;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class PlayerController : MonoBehaviour
     [Header("Photon")] 
     private PhotonView _view;
 
+    [Header("UI Player")] 
+    [SerializeField] private TextMeshProUGUI _textNamePlayer;
 
     private void Awake()
     {
@@ -64,6 +67,17 @@ public class PlayerController : MonoBehaviour
             lookAt = cam.newCam.GetComponentInChildren<LookAt>().transform;
         //_view.RPC(nameof(SetAim), RpcTarget.AllBuffered);
         SetAimTarget(lookAt);
+        
+        PlayerManager.instance.AddPlayer(gameObject);
+        
+        _view.RPC(nameof(SetName), RpcTarget.AllBuffered);
+    }
+
+    [PunRPC]
+    private void SetName()
+    { 
+        _textNamePlayer.text = _view.Owner.NickName;
+        
     }
 
     [PunRPC]
