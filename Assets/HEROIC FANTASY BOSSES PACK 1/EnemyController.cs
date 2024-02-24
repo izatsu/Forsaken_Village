@@ -168,6 +168,9 @@ public class EnemyController : MonoBehaviourPunCallbacks
 
     IEnumerator AttackAnimationCoroutine(int attackType, Transform playerTransform)
     {
+        Quaternion targetRotation = Quaternion.LookRotation(playerTransform.position - transform.position);
+        lookAtTargetScript.SetTarget(playerTransform);
+
         if (attackType == 1)
         {
             animator.SetBool("Attack1", true);
@@ -184,9 +187,6 @@ public class EnemyController : MonoBehaviourPunCallbacks
             Destroy(attackVFX, 5);
         }
 
-        Quaternion targetRotation = Quaternion.LookRotation(playerTransform.position - transform.position);
-        lookAtTargetScript.SetTarget(playerTransform);
-
         yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
 
         // Dat lai animation va tiep tuc di chuyen theo diem
@@ -194,7 +194,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
         animator.SetBool("Attack2", false);
         isAttacking = false;
         navMeshAgent.isStopped = false;
-       // lastAttackTime = Time.time;
+        // lastAttackTime = Time.time;
         lookAtTargetScript.SetTarget(null);
     }
 
