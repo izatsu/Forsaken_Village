@@ -20,8 +20,6 @@ public class EnemyController : MonoBehaviourPunCallbacks
     [SerializeField] float attackRange2 = 5f;
     [SerializeField] float attackCooldown = 1f;
 
-    [Header("Field of View")]
-    [SerializeField] float fieldOfViewAngle = 90f;
 
     [Header("Animation")]
     [SerializeField] Animator animator;
@@ -100,21 +98,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
             if (distance <= visionRange)
             {
                 Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-                float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-
-                // Kiem tra goc nhin cua enemy
-                if (angleToPlayer <= fieldOfViewAngle * 0.5f)
-                {
-                    RaycastHit hit;
-                    if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRange))
-                    {
-                        if (hit.transform.CompareTag("Player"))
-                        {
-
-                            return true;
-                        }
-                    }
-                }
+                return true;
             }
         }
         return false;
