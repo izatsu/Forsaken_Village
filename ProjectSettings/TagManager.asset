@@ -14,6 +14,7 @@ TagManager:
   - Pray
   - Chest
   - Skill
+  - TextDie
   layers:
   - Default
   - TransparentFX

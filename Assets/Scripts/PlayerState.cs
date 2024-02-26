@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 public class PlayerState : MonoBehaviour
@@ -14,10 +16,27 @@ public class PlayerState : MonoBehaviour
     public bool isDie;
 
     public DissolvingControllerTut dissolvingControllerTut;
+
+    public GameObject textDie;
+
+    private void OnEnable()
+    {
+        if(textDie != null)
+            textDie.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        if(textDie != null)
+            textDie.SetActive(true);
+    }
+
     private void Awake()
     {
         isDie = false;
         _view = GetComponent<PhotonView>();
+        textDie = GameObject.FindGameObjectWithTag("TextDie");
+        textDie.SetActive(false);
     }
 
     private void Start()
@@ -55,6 +74,7 @@ public class PlayerState : MonoBehaviour
         gameObject.GetComponent<PlayerCamera>().newCam.SetActive(false);
         dissolvingControllerTut.Revival();
         gameObject.SetActive(false);
+        textDie.SetActive(true);
     }
 
     [PunRPC]
