@@ -105,6 +105,7 @@ public class ReloadWeapon : MonoBehaviour
         weapon.magazine.SetActive(true);
         Destroy(_magazineHand);
         weapon.ammoCount = weapon.clipSize;
+        weapon.textAmmo.text = $"{weapon.clipSize}/\u221e";
         rigController.ResetTrigger("reload_Weapon");
     }
 

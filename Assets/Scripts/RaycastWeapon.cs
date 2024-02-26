@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Photon.Pun;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -55,6 +56,7 @@ public class RaycastWeapon : MonoBehaviour
     public int ammoCount;
     public int clipSize;
     [HideInInspector]public bool reloading= false;
+    public TextMeshProUGUI textAmmo;
     
     [Header("Sound")] 
     private AudioSource _audioSource;
@@ -66,6 +68,9 @@ public class RaycastWeapon : MonoBehaviour
         recoil = GetComponent<WeaponRecoil>();
         _audioSource = GetComponent<AudioSource>();
         _view = GetComponent<PhotonView>();
+
+        ammoCount = clipSize; 
+        textAmmo.text = $"{ammoCount}/\u221e";
     }
 
     Vector3 GetPosition(Bullet bullet)
@@ -113,7 +118,8 @@ public class RaycastWeapon : MonoBehaviour
             return;
         }
 
-        ammoCount--; 
+        ammoCount--;
+        textAmmo.text = $"{ammoCount}/\u221e";
         _view.RPC(nameof(MuzzelFlashGun), RpcTarget.All);
 
         Vector3 velocity = (raycastDestination.position - raycastOrigin.position).normalized * bulletSpeed;
