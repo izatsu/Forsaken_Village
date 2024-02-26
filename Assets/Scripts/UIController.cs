@@ -35,12 +35,16 @@ public class UIController : MonoBehaviourPunCallbacks
     public RoomButton oneRoomButton;
     public List<RoomButton> roomButtons = new();
     
+    private PhotonView _view;
+    
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
+
+        _view = GetComponent<PhotonView>();
     }
 
     private void Start()
@@ -230,7 +234,14 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public void ButtonStartGame()
     {
+        _view.RPC(nameof(CloseAllSceenMutil), RpcTarget.AllBuffered);
         PhotonNetwork.LoadLevel("TestMutilplayer");
+    }
+
+    [PunRPC]
+    private void CloseAllSceenMutil()
+    {
+        CloseAllScreen();
     }
 
     public void ButtonJoinRoom()

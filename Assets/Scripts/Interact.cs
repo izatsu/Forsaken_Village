@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 public class Interact : MonoBehaviour
@@ -24,13 +25,20 @@ public class Interact : MonoBehaviour
     [SerializeField] private int countKeys;
     [SerializeField] private int countBooks;
 
-    private PhotonView _view; 
+    private PhotonView _view;
+
+    [Header("UI Count Key and Book")] 
+    [SerializeField] private TextMeshProUGUI _textCountKeys; 
+    [SerializeField] private TextMeshProUGUI _textCountBooks; 
 
     private void Start()
     {
         _view = GetComponent<PhotonView>();
         keys = new List<Key>();
         books = new List<Book>();
+        
+        _textCountKeys.text = countKeys.ToString();
+        _textCountBooks.text = countBooks.ToString();
     }
 
     private void Update()
@@ -48,12 +56,14 @@ public class Interact : MonoBehaviour
 
     private void CountKey()
     {
-        countKeys = keys.Count; 
+        countKeys = keys.Count;
+        _textCountKeys.text = countKeys.ToString();
     }
 
     private void CountBook()
     {
         countBooks = books.Count;
+        _textCountBooks.text = countBooks.ToString();
     }
     
     
