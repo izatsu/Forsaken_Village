@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Photon.Pun;
 using TMPro;
 using Unity.Mathematics;
@@ -68,7 +69,11 @@ public class RaycastWeapon : MonoBehaviour
         recoil = GetComponent<WeaponRecoil>();
         _audioSource = GetComponent<AudioSource>();
         _view = GetComponent<PhotonView>();
+        textAmmo = GameObject.FindGameObjectWithTag("TextAmmo").GetComponent<TextMeshProUGUI>();
+    }
 
+    private void Start()
+    {
         ammoCount = clipSize; 
         textAmmo.text = $"{ammoCount}/\u221e";
     }
