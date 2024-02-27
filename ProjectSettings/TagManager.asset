@@ -15,6 +15,7 @@ TagManager:
   - Chest
   - Skill
   - TextDie
+  - TextAmmo
   layers:
   - Default
   - TransparentFX

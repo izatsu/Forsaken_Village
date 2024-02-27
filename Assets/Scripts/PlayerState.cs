@@ -36,7 +36,8 @@ public class PlayerState : MonoBehaviour
         isDie = false;
         _view = GetComponent<PhotonView>();
         textDie = GameObject.FindGameObjectWithTag("TextDie");
-        textDie.SetActive(false);
+        if(textDie != null)
+            textDie.SetActive(false);
     }
 
     private void Start()
@@ -74,7 +75,8 @@ public class PlayerState : MonoBehaviour
         gameObject.GetComponent<PlayerCamera>().newCam.SetActive(false);
         dissolvingControllerTut.Revival();
         gameObject.SetActive(false);
-        textDie.SetActive(true);
+        if(textDie != null)
+            textDie.SetActive(true);
     }
 
     [PunRPC]

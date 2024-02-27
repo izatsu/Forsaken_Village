@@ -235,7 +235,7 @@ public class UIController : MonoBehaviourPunCallbacks
     public void ButtonStartGame()
     {
         _view.RPC(nameof(CloseAllSceenMutil), RpcTarget.AllBuffered);
-        PhotonNetwork.LoadLevel("TestMutilplayer");
+        PhotonNetwork.LoadLevel("VFX");
     }
 
     [PunRPC]
