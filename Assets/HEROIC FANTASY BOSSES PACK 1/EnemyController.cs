@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
 
     [Header("Vision Range")]
     [SerializeField] float visionRange = 5f;
-    [SerializeField] float returnTimeOutSize = 5f;
+    [SerializeField] float returnTimeOutSize = 20f;
 
     [Header("Attack Settings")]
     [SerializeField] float attackRange1 = 3f;
@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
     bool isAttacking;
     float lastAttackTime;
 
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -51,24 +52,30 @@ public class EnemyController : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        /*if (!photonView.IsMine)
-            return;*/
 
-        if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 0.1f)
+        /*if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 0.1f)
         {
             SetNextDestination();
-        }           
+        }*/           
         if (PlayerInVisionRange())
         {
+            timePlayerLeftSight = 0f;
             playerInSight = true;
             FollowOrAttackPlayer();
         }
-        else if (playerInSight)
+        else if (playerInSight && !PlayerInVisionRange())
         {
             PlayerLeftSight();
         }
+        else
+        {
+            if(Vector3.Distance(transform.position, navMeshAgent.destination)<0.1f)
+            {
+                SetNextDestination();
+            }
+            
+        }
     }
-
     void SetNextDestination()
     {
         currentMovePoint = GetRandomMovePoint();
@@ -90,7 +97,6 @@ public class EnemyController : MonoBehaviourPunCallbacks
     {
         //Tim tat ca gameobject co tag Player
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log("Da tim");
 
         foreach (GameObject player in players)
         {
@@ -125,6 +131,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
         //Sau khi lay duoc player gan nhat thi tan cong
         if (nearestPlayer != null)
         {
+            //navMeshAgent.SetDestination(nearestPlayer.transform.position);
             if (minDistance <= attackRange1 && Time.time - lastAttackTime > attackCooldown)
             {
                 Attack(1,nearestPlayer.transform);
@@ -148,6 +155,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
             navMeshAgent.isStopped = true;
             StartCoroutine(AttackAnimationCoroutine(attackType,playerTransform));
         }
+       // navMeshAgent.SetDestination(playerTransform.position);
     }
 
     IEnumerator AttackAnimationCoroutine(int attackType, Transform playerTransform)
@@ -184,14 +192,23 @@ public class EnemyController : MonoBehaviourPunCallbacks
 
     void PlayerLeftSight()
     {
-        // Kiem tra player roi khoi tam nhin
-        timePlayerLeftSight += Time.deltaTime;
-        if (timePlayerLeftSight >= returnTimeOutSize)
+        if(!PlayerInVisionRange())
         {
-            playerInSight = false;
-            timePlayerLeftSight = 0f;
-            SetNextDestination();
+            timePlayerLeftSight += Time.deltaTime;
+            if (timePlayerLeftSight >= returnTimeOutSize)
+            {
+                playerInSight = false;
+                timePlayerLeftSight = 0f;
+                SetNextDestination();
+
+            }
+            else
+            {
+                FollowOrAttackPlayer();
+            }
         }
+        
+       
     }
 
 }
