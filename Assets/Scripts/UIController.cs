@@ -34,6 +34,9 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject roomListScreen;
     public RoomButton oneRoomButton;
     public List<RoomButton> roomButtons = new();
+
+    [Header("Màn hình setting")]
+    public GameObject settingScreen;
     
     private PhotonView _view;
     
@@ -67,6 +70,7 @@ public class UIController : MonoBehaviourPunCallbacks
         createNicknameScreen.SetActive(false);
         roomDetailScreen.SetActive(false);
         roomListScreen.SetActive(false);
+        settingScreen.SetActive(false);
     }
 
     private void ShowAllPLayer()
@@ -269,5 +273,15 @@ public class UIController : MonoBehaviourPunCallbacks
         CloseAllScreen();
     }
 
+    public void ButtonSetting()
+    {
+        CloseAllScreen();
+        OpenScreen(settingScreen);
+    }
+    public void ButtonBackSetting()
+    {
+        CloseAllScreen();
+        OpenScreen(mainScreen);
+    }
     #endregion
 }
