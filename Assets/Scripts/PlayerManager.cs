@@ -12,6 +12,11 @@ public class PlayerManager : MonoBehaviour
 
     private PhotonView _view;
 
+    public int countPlayerDie = 0;
+    public bool isGameOver = false;
+    public bool isOnUIGameOver = false;
+    public GameObject uiGameOver;
+
     private void Awake()
     {
         if (instance == null)
@@ -24,7 +29,19 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        if ((players.Count > 0) && (countPlayerDie >= players.Count) && !isOnUIGameOver)
+        {
+            //_view.RPC(nameof(GameOver), RpcTarget.AllBuffered);
+            isGameOver = true;
+            isOnUIGameOver = true;
+            AudioListener.pause = true;
+            Time.timeScale = 0;
+            uiGameOver.SetActive(true);
+        }
+            
+        
         ResetPlayerDead();
+        
     }
 
     public void AddPlayer(GameObject player)
@@ -36,20 +53,25 @@ public class PlayerManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         Debug.Log("Da hoi sinh");
+        countPlayerDie--;
         Transform pointSpawn = SpawnManager.instance.GetSpawnPointPlayer();
         player.transform.position = pointSpawn.position;
         cam.SetActive(true);
         player.SetActive(true);
     }
-    
+
     private void ResetPlayerDead()
     {
-        foreach (var player in PlayerManager.instance.players)
+        if (!isGameOver)
         {
-            if (player.GetComponent<PlayerState>().isDie == true)
+            foreach (var player in players)
             {
-                player.GetComponent<PlayerState>().isDie = false;
-                StartCoroutine(DeadAction(player, player.GetComponent<PlayerCamera>().newCam));
+                if (player.GetComponent<PlayerState>().isDie == true)
+                {
+                    countPlayerDie++;
+                    player.GetComponent<PlayerState>().isDie = false;
+                    StartCoroutine(DeadAction(player, player.GetComponent<PlayerCamera>().newCam));
+                }
             }
         }
     }
