@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 
 public class UIController : MonoBehaviourPunCallbacks
 {
@@ -53,8 +54,8 @@ public class UIController : MonoBehaviourPunCallbacks
     private void Start()
     {
         CloseAllScreen();
-        OpenScreen(loadingScreen);
-        PhotonNetwork.ConnectUsingSettings();
+        StartCoroutine(TimedDelayLoadScreen());
+        //PhotonNetwork.ConnectUsingSettings();
     }
     
     private void OpenScreen(GameObject nameScreen)
@@ -95,8 +96,15 @@ public class UIController : MonoBehaviourPunCallbacks
         
     }
 
+    IEnumerator TimedDelayLoadScreen()
+    {
+        OpenScreen(loadingScreen);
+        yield return new WaitForSeconds(7f);
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
     #region PhotonPunFuction
-    
+
     // Hàm sẽ chạy sau khi kết nối thành công máy chủ
     public override void OnConnectedToMaster()
     {
