@@ -32,7 +32,7 @@ namespace Michsky.UI.Dark
         {
             currentPanel = panels[currentPanelIndex];
             currentPanelAnimator = currentPanel.GetComponent<Animator>();
-            currentPanelAnimator.Play(panelFadeIn);
+            //currentPanelAnimator.Play(panelFadeIn);
 
             if (enableHomeBlur == true)
                 homeBlurManager.BlurInAnim();
