@@ -22,6 +22,7 @@ public class UIController : MonoBehaviourPunCallbacks
     
     [Header("Màn hình tạo Nickname")] 
     public GameObject createNicknameScreen;
+    public GameObject errorScreen;
     public TMP_InputField inputNickname; 
 
     [Header("Màn hình trong Phòng")] 
@@ -72,6 +73,7 @@ public class UIController : MonoBehaviourPunCallbacks
         roomDetailScreen.SetActive(false);
         roomListScreen.SetActive(false);
         settingScreen.SetActive(false);
+        errorScreen.SetActive(false);
     }
 
     private void ShowAllPLayer()
@@ -202,6 +204,7 @@ public class UIController : MonoBehaviourPunCallbacks
         if (string.IsNullOrEmpty(roomName))
         {
             Debug.Log("Tên phòng không hợp lệ");
+            OpenScreen(errorScreen);
             return;
         }
 
@@ -225,6 +228,7 @@ public class UIController : MonoBehaviourPunCallbacks
         if (string.IsNullOrEmpty(nickname))
         {
             Debug.Log("Tên phòng không hợp lệ");
+            OpenScreen(errorScreen);
             return;
         }
 
@@ -290,6 +294,10 @@ public class UIController : MonoBehaviourPunCallbacks
     {
         CloseAllScreen();
         OpenScreen(mainScreen);
+    }
+    public void ButtonExitErrorScreen()
+    {
+        errorScreen.SetActive(false);
     }
     #endregion
 }
