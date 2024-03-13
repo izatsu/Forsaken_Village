@@ -4,6 +4,7 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using UnityEngine.Serialization;
 
 public class EnemyController : MonoBehaviourPunCallbacks
 {
@@ -42,10 +43,16 @@ public class EnemyController : MonoBehaviourPunCallbacks
     float lastAttackTime;
 
 
+    [Header("Sound VFX")] 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip soundMove; 
+    [SerializeField] private AudioClip soundMoveToPlayer; 
+
     void Start()
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        _audioSource = GetComponent<AudioSource>();
         currentMovePoint = Random.Range(0, movePoints.Length);
         SetNextDestination();
     }
@@ -74,6 +81,32 @@ public class EnemyController : MonoBehaviourPunCallbacks
                 SetNextDestination();
             }
             
+        }
+
+        if (navMeshAgent.velocity.magnitude > 0.1f)
+        {
+            if (!playerInSight)
+            {
+                if (_audioSource.clip != soundMove)
+                {
+                    _audioSource.enabled = false;
+                    _audioSource.clip = soundMove;
+                }
+                _audioSource.enabled = true;
+                    
+            }
+            else
+            {
+
+                if (_audioSource.clip != soundMoveToPlayer)
+                {
+                    _audioSource.enabled = false;
+                    _audioSource.clip = soundMoveToPlayer;
+                }
+
+                _audioSource.enabled = true;
+
+            }
         }
     }
     void SetNextDestination()
@@ -171,8 +204,8 @@ public class EnemyController : MonoBehaviourPunCallbacks
         {
             animator.SetBool("Attack2", true);
             GameObject vfxSkill = Instantiate(vfxEnemySkill, vfxEnemySkillTransform.position, Quaternion.identity);
-            Destroy(vfxSkill, 2);
-            yield return new WaitForSeconds(1.8f);
+            Destroy(vfxSkill, 5);
+            yield return new WaitForSeconds(2.5f);
             GameObject attackVFX = Instantiate(vfxAttackPrefab, vfxTarget.position, Quaternion.identity);
             attackVFX.transform.forward = transform.forward;
             //GameObject attackVFX = Instantiate(vfxAttackPrefab, transform.position, Quaternion.identity);

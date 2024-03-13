@@ -30,6 +30,10 @@ public class Interact : MonoBehaviour
     [Header("UI Count Key and Book")] 
     [SerializeField] private TextMeshProUGUI _textCountKeys; 
     [SerializeField] private TextMeshProUGUI _textCountBooks; 
+    
+    [Header("Sound VFX")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip soundPickKey;
 
     private void Start()
     {
@@ -46,9 +50,9 @@ public class Interact : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && _view.IsMine)
         {
             _view.RPC(nameof(PickUpKey), RpcTarget.AllBuffered);
-            //PickUpKey();
-            PickUpBook();
+            _view.RPC(nameof(PickUpBook), RpcTarget.AllBuffered);
             _view.RPC(nameof(OpenDoor), RpcTarget.AllBuffered);
+            //_view.RPC(nameof(PutUpBook), RpcTarget.AllBuffered);
             PutUpBook();
             _view.RPC(nameof(OpenChest), RpcTarget.AllBuffered);
         }
@@ -76,7 +80,9 @@ public class Interact : MonoBehaviour
             if (hitInfo.transform.tag == "Key")
             {
                 Key newKey = new Key();
-                newKey.id = hitInfo.transform.GetComponent<PickUpItemID>().id; 
+                newKey.id = hitInfo.transform.GetComponent<PickUpItemID>().id;
+                audioSource.clip = soundPickKey;
+                audioSource.Play();
                 keys.Add(newKey);
                 CountKey();
                 //Destroy(hitInfo.transform.gameObject);
@@ -85,12 +91,7 @@ public class Interact : MonoBehaviour
             }
         }
     }
-
-    [PunRPC]
-    private void DestroyObject(GameObject obj)
-    {
-        Destroy(obj);
-    } 
+    
     
     [PunRPC]
     private void OpenDoor()
@@ -154,7 +155,9 @@ public class Interact : MonoBehaviour
             }
         }
     }
-
+    
+    
+    [PunRPC]
     private void PickUpBook()
     {
         RaycastHit hitInfo;
@@ -166,11 +169,13 @@ public class Interact : MonoBehaviour
                 newBook.id = hitInfo.transform.GetComponent<PickUpItemID>().id; 
                 books.Add(newBook);
                 CountBook();
-                Destroy(hitInfo.transform.gameObject);
+                //Destroy(hitInfo.transform.gameObject);
+                hitInfo.transform.GetComponent<PickUpItemID>().DestroyObj();
             }
         }
     }
 
+    //[PunRPC]
     private void PutUpBook()
     {
         RaycastHit hitInfo;
@@ -189,16 +194,15 @@ public class Interact : MonoBehaviour
                         if (matchingBook != null)
                         {
                             prayComponent.countAcitveBook++;
-                            matchingBook.gameObject.SetActive(true);
+                            //matchingBook.gameObject.SetActive(true);
+                            prayComponent.SetActiveBook(matchingBook.id);
                             books.Remove(book);
                             CountBook();
                             break;
-                        }
+                        } 
                     }
                 }
             }
         }
     }
-    
-    
 }
