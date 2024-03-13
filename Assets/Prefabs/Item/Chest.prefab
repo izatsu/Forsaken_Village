@@ -665,6 +665,8 @@ MonoBehaviour:
   inReach: 0
   idChest: 10
   isLock: 1
+  soundOpen: {fileID: 8300000, guid: 15f70789746653a4389e3a61672324d9, type: 3}
+  soundLock: {fileID: 8300000, guid: f6499e53cde28a34e869ba23660fa7fa, type: 3}
 --- !u!65 &5180077775188781887
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -696,7 +698,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 15f70789746653a4389e3a61672324d9, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

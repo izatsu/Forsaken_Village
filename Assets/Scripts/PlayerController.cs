@@ -2,6 +2,7 @@
 using UnityEngine.Animations.Rigging;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private float _vertical;
     private Animator _anim;
     private Vector3 _rootMotion;
+    private bool _isRunning = false;
 
 
     [Header("Camera")] 
@@ -49,9 +51,16 @@ public class PlayerController : MonoBehaviour
     [Header("UI Player")] 
     [SerializeField] private TextMeshProUGUI _textNamePlayer;
 
+    [Header("Sound Effect")] 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip soundFootStep;
+    [SerializeField] private AudioClip soundRun;
+    
+    
     private void Awake()
     {
         _view = GetComponent<PhotonView>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -100,6 +109,32 @@ public class PlayerController : MonoBehaviour
 
             _anim.SetFloat("Horizontal", _horizontal);
             _anim.SetFloat("Vertical", _vertical);
+
+            if (((_horizontal != 0) || (_vertical != 0)) && !_isJumping)
+            {
+                if (_isRunning)
+                {
+                    if (_audioSource.clip != soundRun)
+                    {
+                        _audioSource.enabled = false;
+                        _audioSource.clip = soundRun;
+                    }
+                    _audioSource.enabled = true;
+                }
+                else
+                {
+                    if (_audioSource.clip != soundFootStep)
+                    {
+                        _audioSource.enabled = false;
+                        _audioSource.clip = soundFootStep;
+                    }
+                    _audioSource.enabled = true;
+                }
+            }
+            else
+            {
+                _audioSource.enabled = false;
+            }
         
             UpdateRun();
             UpdateCrouch();
@@ -155,8 +190,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateRun()
     {
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        _anim.SetBool("isRun", isRunning);
+        _isRunning = Input.GetKey(KeyCode.LeftShift);
+        _anim.SetBool("isRun", _isRunning);
     }
 
     private void UpdateCrouch()

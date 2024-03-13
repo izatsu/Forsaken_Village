@@ -6,7 +6,12 @@ using UnityEngine.Serialization;
 public class Door : MonoBehaviour
 {
     private Animator _animDoor;
+    
+    [Header("Sound VFX")]
     private AudioSource _doorSound;
+
+    [SerializeField] private AudioClip soundOpen; 
+    [SerializeField] private AudioClip soundLock;
 
     public bool inReach;
 
@@ -48,6 +53,7 @@ public class Door : MonoBehaviour
         _isOpen = !_isOpen;
         inReach = false;
         _animDoor.SetBool("Open", _isOpen);
+        _doorSound.clip = soundOpen;
         _doorSound.Play();
     }
 
@@ -57,5 +63,7 @@ public class Door : MonoBehaviour
         Debug.Log("Cua bi khoa");
         _animDoor.Play("Lock");
         inReach = false;
+        _doorSound.clip = soundLock;
+        _doorSound.Play();
     }
 }

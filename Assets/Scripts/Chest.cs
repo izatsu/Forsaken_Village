@@ -4,7 +4,7 @@ using UnityEngine;
 public class Chest : MonoBehaviour
 {
     private Animator _anim;
-    private AudioSource _sound;
+    
 
     public bool inReach;
 
@@ -14,13 +14,18 @@ public class Chest : MonoBehaviour
     public bool isLock = true;
 
     private PhotonView _view;
+    
+    [Header("Sound VFX")] 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip soundOpen;
+    [SerializeField] private AudioClip soundLock;
     private void Start()
     {
         _view = GetComponent<PhotonView>();
         _isOpen = false;
         inReach = false;
         _anim = GetComponent<Animator>();
-        _sound = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -46,7 +51,8 @@ public class Chest : MonoBehaviour
         _isOpen = !_isOpen;
         inReach = false;
         _anim.SetBool("isOpen", _isOpen);
-        _sound.Play();
+        audioSource.clip = soundOpen;
+        audioSource.Play();
     }
 
     [PunRPC]
@@ -54,5 +60,7 @@ public class Chest : MonoBehaviour
     {
         Debug.Log("Ruong bi khoa");
         inReach = false;
+        audioSource.clip = soundLock;
+        audioSource.Play();
     }
 }

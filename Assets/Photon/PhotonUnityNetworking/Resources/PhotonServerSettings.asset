@@ -90,6 +90,11 @@ MonoBehaviour:
   - CloseAllSceenMutil
   - OffUI
   - GameOver
+  - PickUpBook
+  - PutUpBook
+  - SetActiveObj
+  - ActiveBook
+  - ActivateBook
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

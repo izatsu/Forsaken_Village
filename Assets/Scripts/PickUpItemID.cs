@@ -23,4 +23,5 @@ public class PickUpItemID : MonoBehaviour
     {
         Destroy(this.gameObject);
     }
+    
 }

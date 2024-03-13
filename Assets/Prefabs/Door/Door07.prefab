@@ -71,6 +71,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805f4abc818877e4d9c8af0aab8ca500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundOpen: {fileID: 8300000, guid: 10c2af463e1de2b46993224680aea32f, type: 3}
+  soundLock: {fileID: 8300000, guid: 3f87ad8702676514f909771974c9303a, type: 3}
   inReach: 0
   idDoor: 0
   isLock: 0
@@ -95,7 +97,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -130,7 +132,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
