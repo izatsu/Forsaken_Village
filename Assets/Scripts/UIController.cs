@@ -37,6 +37,10 @@ public class UIController : MonoBehaviourPunCallbacks
     public RoomButton oneRoomButton;
     public List<RoomButton> roomButtons = new();
 
+    [Header("Màn hình Help & Guild")]
+    public GameObject helpScreen;
+
+
     [Header("Màn hình setting")]
     public GameObject settingScreen;
     
@@ -74,6 +78,7 @@ public class UIController : MonoBehaviourPunCallbacks
         roomListScreen.SetActive(false);
         settingScreen.SetActive(false);
         errorScreen.SetActive(false);
+        helpScreen.SetActive(false);
     }
 
     private void ShowAllPLayer()
@@ -298,6 +303,16 @@ public class UIController : MonoBehaviourPunCallbacks
     public void ButtonExitErrorScreen()
     {
         errorScreen.SetActive(false);
+    }
+    public void ButtonHelpGuild()
+    {
+        CloseAllScreen();
+        helpScreen.SetActive(true);
+    }
+    public void ButtonBackHelpGuild()
+    {
+        helpScreen.SetActive(false);
+        OpenScreen(mainScreen);
     }
     #endregion
 }
