@@ -14,17 +14,19 @@ public class SpawnManager : MonoBehaviour
         {
             instance = this;
         }
+        else 
+            Destroy(this.gameObject);
     }
 
     public Transform GetSpawnPointPlayer()
     {
-        var ran = Random.Range(0, spawnPointsPlayer.Length);
+        int ran = Random.Range(0, spawnPointsPlayer.Length);
         return spawnPointsPlayer[ran];
     }
     
     public Transform GetSpawnPointEnemy()
     {
-        var ran = Random.Range(0, spawnPointsPlayer.Length);
+        int ran = Random.Range(0, spawnPointsPlayer.Length);
         return spawnPointsEnemy[ran];
     }
 }

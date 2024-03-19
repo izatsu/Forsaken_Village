@@ -52,8 +52,7 @@ public class Interact : MonoBehaviour
             _view.RPC(nameof(PickUpKey), RpcTarget.AllBuffered);
             _view.RPC(nameof(PickUpBook), RpcTarget.AllBuffered);
             _view.RPC(nameof(OpenDoor), RpcTarget.AllBuffered);
-            //_view.RPC(nameof(PutUpBook), RpcTarget.AllBuffered);
-            PutUpBook();
+            _view.RPC(nameof(PutUpBook), RpcTarget.AllBuffered);
             _view.RPC(nameof(OpenChest), RpcTarget.AllBuffered);
         }
     }
@@ -175,7 +174,7 @@ public class Interact : MonoBehaviour
         }
     }
 
-    //[PunRPC]
+    [PunRPC]
     private void PutUpBook()
     {
         RaycastHit hitInfo;

@@ -46,7 +46,10 @@ public class EnemyController : MonoBehaviourPunCallbacks
     [Header("Sound VFX")] 
     private AudioSource _audioSource;
     [SerializeField] private AudioClip soundMove; 
-    [SerializeField] private AudioClip soundMoveToPlayer; 
+    [SerializeField] private AudioClip soundMoveToPlayer;
+
+    public Pray pray;
+    
 
     void Start()
     {
@@ -63,49 +66,57 @@ public class EnemyController : MonoBehaviourPunCallbacks
         /*if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance < 0.1f)
         {
             SetNextDestination();
-        }*/           
-        if (PlayerInVisionRange())
+        }*/
+        if (pray.checkBookFull)
         {
-            timePlayerLeftSight = 0f;
-            playerInSight = true;
             FollowOrAttackPlayer();
-        }
-        else if (playerInSight && !PlayerInVisionRange())
-        {
-            PlayerLeftSight();
         }
         else
         {
-            if(Vector3.Distance(transform.position, navMeshAgent.destination)<0.1f)
+            if (PlayerInVisionRange() || EnemyState.instance.playerAttack)
             {
-                SetNextDestination();
+                EnemyState.instance.playerAttack = false;
+                timePlayerLeftSight = 0f;
+                playerInSight = true;
+                FollowOrAttackPlayer();
             }
-            
-        }
-
-        if (navMeshAgent.velocity.magnitude > 0.1f)
-        {
-            if (!playerInSight)
+            else if (playerInSight && !PlayerInVisionRange())
             {
-                if (_audioSource.clip != soundMove)
-                {
-                    _audioSource.enabled = false;
-                    _audioSource.clip = soundMove;
-                }
-                _audioSource.enabled = true;
-                    
+                PlayerLeftSight();
             }
             else
             {
-
-                if (_audioSource.clip != soundMoveToPlayer)
+                if(Vector3.Distance(transform.position, navMeshAgent.destination)<0.1f)
                 {
-                    _audioSource.enabled = false;
-                    _audioSource.clip = soundMoveToPlayer;
+                    SetNextDestination();
                 }
+            
+            }
 
-                _audioSource.enabled = true;
+            if (navMeshAgent.velocity.magnitude > 0.1f)
+            {
+                if (!playerInSight)
+                {
+                    if (_audioSource.clip != soundMove)
+                    {
+                        _audioSource.enabled = false;
+                        _audioSource.clip = soundMove;
+                    }
+                    _audioSource.enabled = true;
+                    
+                }
+                else
+                {
 
+                    if (_audioSource.clip != soundMoveToPlayer)
+                    {
+                        _audioSource.enabled = false;
+                        _audioSource.clip = soundMoveToPlayer;
+                    }
+
+                    _audioSource.enabled = true;
+
+                }
             }
         }
     }

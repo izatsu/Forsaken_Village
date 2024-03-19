@@ -208,7 +208,7 @@ public class RaycastWeapon : MonoBehaviour
             var rb2d = _hitInfo.collider.GetComponent<Rigidbody>();
             if (rb2d)
             {
-                rb2d.AddForceAtPosition(_ray.direction * 20, _hitInfo.point, ForceMode.Impulse);
+                rb2d.AddForceAtPosition(_ray.direction * 2, _hitInfo.point, ForceMode.Impulse);
             }
         }
         else

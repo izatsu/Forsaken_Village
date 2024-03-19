@@ -11,6 +11,8 @@ public class Pray : MonoBehaviour
 
     private PhotonView _view;
 
+    public bool checkBookFull = false;
+
     private void Start()
     {
         _view = GetComponent<PhotonView>();
@@ -26,6 +28,7 @@ public class Pray : MonoBehaviour
         if (countAcitveBook == books.Length)
         {
             //Debug.Log("Da full");
+            checkBookFull = true;
         }
     }
 

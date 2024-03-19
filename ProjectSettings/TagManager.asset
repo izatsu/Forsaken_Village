@@ -16,6 +16,7 @@ TagManager:
   - Skill
   - TextDie
   - TextAmmo
+  - Boss
   layers:
   - Default
   - TransparentFX
