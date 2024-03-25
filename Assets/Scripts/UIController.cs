@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 
 public class UIController : MonoBehaviourPunCallbacks
 {
@@ -21,6 +22,7 @@ public class UIController : MonoBehaviourPunCallbacks
     
     [Header("Màn hình tạo Nickname")] 
     public GameObject createNicknameScreen;
+    public GameObject errorScreen;
     public TMP_InputField inputNickname; 
 
     [Header("Màn hình trong Phòng")] 
@@ -34,6 +36,9 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject roomListScreen;
     public RoomButton oneRoomButton;
     public List<RoomButton> roomButtons = new();
+
+    [Header("Màn hình Help&Guild")]
+    public GameObject helpGuildScreen;
 
     [Header("Màn hình setting")]
     public GameObject settingScreen;
@@ -53,8 +58,8 @@ public class UIController : MonoBehaviourPunCallbacks
     private void Start()
     {
         CloseAllScreen();
-        OpenScreen(loadingScreen);
-        PhotonNetwork.ConnectUsingSettings();
+        StartCoroutine(TimedDelayLoadScreen());
+        //PhotonNetwork.ConnectUsingSettings();
     }
     
     private void OpenScreen(GameObject nameScreen)
@@ -71,6 +76,8 @@ public class UIController : MonoBehaviourPunCallbacks
         roomDetailScreen.SetActive(false);
         roomListScreen.SetActive(false);
         settingScreen.SetActive(false);
+        errorScreen.SetActive(false);
+        helpGuildScreen.SetActive(false);
     }
 
     private void ShowAllPLayer()
@@ -95,8 +102,15 @@ public class UIController : MonoBehaviourPunCallbacks
         
     }
 
+    IEnumerator TimedDelayLoadScreen()
+    {
+        OpenScreen(loadingScreen);
+        yield return new WaitForSeconds(7f);
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
     #region PhotonPunFuction
-    
+
     // Hàm sẽ chạy sau khi kết nối thành công máy chủ
     public override void OnConnectedToMaster()
     {
@@ -194,6 +208,7 @@ public class UIController : MonoBehaviourPunCallbacks
         if (string.IsNullOrEmpty(roomName))
         {
             Debug.Log("Tên phòng không hợp lệ");
+            OpenScreen(errorScreen);
             return;
         }
 
@@ -217,6 +232,7 @@ public class UIController : MonoBehaviourPunCallbacks
         if (string.IsNullOrEmpty(nickname))
         {
             Debug.Log("Tên phòng không hợp lệ");
+            OpenScreen(errorScreen);
             return;
         }
 
@@ -279,6 +295,21 @@ public class UIController : MonoBehaviourPunCallbacks
         OpenScreen(settingScreen);
     }
     public void ButtonBackSetting()
+    {
+        CloseAllScreen();
+        OpenScreen(mainScreen);
+    }
+    public void ButtonExitErrorScreen()
+    {
+        CloseAllScreen();
+        OpenScreen(mainScreen);
+    }
+    public void ButtonHelpAndGuild()
+    {
+        CloseAllScreen();
+        OpenScreen(helpGuildScreen);
+    }
+    public void ButtonExitHelpAndGuild()
     {
         CloseAllScreen();
         OpenScreen(mainScreen);
