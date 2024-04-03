@@ -67,7 +67,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
         {
             SetNextDestination();
         }*/
-        if (pray.checkBookFull)
+        if (pray.checkBookFull && !EnemyState.instance.isDie)
         {
             FollowOrAttackPlayer();
         }
@@ -119,6 +119,9 @@ public class EnemyController : MonoBehaviourPunCallbacks
                 }
             }
         }
+
+        if (EnemyState.instance.isDie)
+            navMeshAgent.speed = 0;
     }
     void SetNextDestination()
     {
@@ -173,7 +176,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
         }
 
         //Sau khi lay duoc player gan nhat thi tan cong
-        if (nearestPlayer != null)
+        if (nearestPlayer != null && !EnemyState.instance.isDie)
         {
             //navMeshAgent.SetDestination(nearestPlayer.transform.position);
             if (minDistance <= attackRange1 && Time.time - lastAttackTime > attackCooldown)

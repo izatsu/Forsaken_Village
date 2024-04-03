@@ -16,6 +16,8 @@ public class EnemyState : MonoBehaviour
 
     public bool playerAttack = false;
 
+    private Animator _animator;
+
     [Header("HealthBar")]
     public Slider healthbar;
     [SerializeField] private int currentHealth;
@@ -29,6 +31,7 @@ public class EnemyState : MonoBehaviour
         isDie = false;
         _view = GetComponent<PhotonView>();
         _enemyController = GetComponent<EnemyController>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -65,8 +68,22 @@ public class EnemyState : MonoBehaviour
             if (currentHealth <= 0)
             {
                 Debug.Log("Die");
+                _view.RPC(nameof(Die), RpcTarget.AllBuffered);
             }
         }
+    }
+
+    [PunRPC]
+    private void Die()
+    {
+        isDie = true;
+        _animator.SetBool("isDie", true);
+        Invoke(nameof(SetActiveBoss), 5f);
+    }
+
+    private void SetActiveBoss()
+    {
+        this.gameObject.SetActive(false);
     }
     
     bool PlayerInVisionRange()

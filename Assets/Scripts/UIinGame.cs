@@ -14,5 +14,6 @@ public class UIinGame : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.LoadLevel("MenuGame");
         Time.timeScale = 1;
+        AudioListener.pause = false;
     }
 }
