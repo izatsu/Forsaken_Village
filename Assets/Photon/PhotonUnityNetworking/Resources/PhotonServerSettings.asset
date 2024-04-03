@@ -95,6 +95,13 @@ MonoBehaviour:
   - SetActiveObj
   - ActiveBook
   - ActivateBook
+  - ActiveBoss
+  - SetOffBoss
+  - Die
+  - SetActiveGhost
+  - ResetGhost
+  - ResetJumpScare
+  - JumpScare
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

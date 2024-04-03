@@ -35,6 +35,8 @@ public class PlayerManager : MonoBehaviour
             isGameOver = true;
             isOnUIGameOver = true;
             AudioListener.pause = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0;
             uiGameOver.SetActive(true);
         }

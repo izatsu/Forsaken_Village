@@ -40,9 +40,6 @@ public class Interact : MonoBehaviour
         _view = GetComponent<PhotonView>();
         keys = new List<Key>();
         books = new List<Book>();
-
-        _textCountKeys = GameObject.FindGameObjectWithTag("TextKey").GetComponent<TextMeshProUGUI>();
-        _textCountBooks = GameObject.FindGameObjectWithTag("TextBook").GetComponent<TextMeshProUGUI>();
         
         _textCountKeys.text = countKeys.ToString();
         _textCountBooks.text = countBooks.ToString();
@@ -55,8 +52,7 @@ public class Interact : MonoBehaviour
             _view.RPC(nameof(PickUpKey), RpcTarget.AllBuffered);
             _view.RPC(nameof(PickUpBook), RpcTarget.AllBuffered);
             _view.RPC(nameof(OpenDoor), RpcTarget.AllBuffered);
-            //_view.RPC(nameof(PutUpBook), RpcTarget.AllBuffered);
-            PutUpBook();
+            _view.RPC(nameof(PutUpBook), RpcTarget.AllBuffered);
             _view.RPC(nameof(OpenChest), RpcTarget.AllBuffered);
         }
     }
@@ -178,7 +174,7 @@ public class Interact : MonoBehaviour
         }
     }
 
-    //[PunRPC]
+    [PunRPC]
     private void PutUpBook()
     {
         RaycastHit hitInfo;

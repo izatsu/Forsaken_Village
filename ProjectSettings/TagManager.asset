@@ -16,8 +16,7 @@ TagManager:
   - Skill
   - TextDie
   - TextAmmo
-  - TextKey
-  - TextBook
+  - Boss
   layers:
   - Default
   - TransparentFX
