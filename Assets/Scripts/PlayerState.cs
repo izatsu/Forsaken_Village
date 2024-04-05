@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerState : MonoBehaviour
 {
@@ -18,6 +19,12 @@ public class PlayerState : MonoBehaviour
     public DissolvingControllerTut dissolvingControllerTut;
 
     public GameObject textDie;
+
+    public Image lowHp;
+
+    [SerializeField] private float timeHeal = 10f;
+    [SerializeField] private GameObject audioLowHp;
+    
 
     private void OnEnable()
     {
@@ -48,6 +55,25 @@ public class PlayerState : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    private void Update()
+    {
+        if (currentHealth == 1)
+        {
+            lowHp.gameObject.GetComponent<Animator>().SetBool("lowHp", true);
+            audioLowHp.SetActive(true);
+            timeHeal -= Time.deltaTime;
+            if (timeHeal <= 0)
+            {
+                currentHealth += 1;
+                timeHeal = 10f;
+            }
+        }
+        else
+        {
+            lowHp.gameObject.GetComponent<Animator>().SetBool("lowHp", false);
+            audioLowHp.SetActive(false);
+        }
+    }
 
 
     public void TakeDamage(int damage)

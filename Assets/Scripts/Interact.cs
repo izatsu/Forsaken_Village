@@ -28,8 +28,8 @@ public class Interact : MonoBehaviour
     private PhotonView _view;
 
     [Header("UI Count Key and Book")] 
-    [SerializeField] private TextMeshProUGUI _textCountKeys; 
-    [SerializeField] private TextMeshProUGUI _textCountBooks; 
+    private TextMeshProUGUI _textCountKeys; 
+    private TextMeshProUGUI _textCountBooks; 
     
     [Header("Sound VFX")]
     [SerializeField] private AudioSource audioSource;
@@ -40,6 +40,9 @@ public class Interact : MonoBehaviour
         _view = GetComponent<PhotonView>();
         keys = new List<Key>();
         books = new List<Book>();
+
+        _textCountKeys = GameObject.FindGameObjectWithTag("TextKey").GetComponent<TextMeshProUGUI>();
+        _textCountBooks = GameObject.FindGameObjectWithTag("TextBook").GetComponent<TextMeshProUGUI>();
         
         _textCountKeys.text = countKeys.ToString();
         _textCountBooks.text = countBooks.ToString();
