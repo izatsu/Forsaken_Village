@@ -19,6 +19,7 @@ TagManager:
   - Boss
   - TextKey
   - TextBook
+  - Note
   layers:
   - Default
   - TransparentFX

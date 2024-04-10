@@ -57,6 +57,7 @@ public class Interact : MonoBehaviour
             _view.RPC(nameof(OpenDoor), RpcTarget.AllBuffered);
             _view.RPC(nameof(PutUpBook), RpcTarget.AllBuffered);
             _view.RPC(nameof(OpenChest), RpcTarget.AllBuffered);
+            PickUpNote();
         }
     }
 
@@ -204,6 +205,20 @@ public class Interact : MonoBehaviour
                         } 
                     }
                 }
+            }
+        }
+    }
+
+    private void PickUpNote()
+    {
+        RaycastHit hitInfo;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, _distance))
+        {
+            if (hitInfo.transform.tag == "Note")
+            {
+                hitInfo.transform.GetComponent<NotePaper>().SetUIOn();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
         }
     }
