@@ -17,6 +17,9 @@ TagManager:
   - TextDie
   - TextAmmo
   - Boss
+  - TextKey
+  - TextBook
+  - Note
   layers:
   - Default
   - TransparentFX
