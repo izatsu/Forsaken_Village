@@ -102,6 +102,7 @@ MonoBehaviour:
   - ResetGhost
   - ResetJumpScare
   - JumpScare
+  - GetMessage
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
