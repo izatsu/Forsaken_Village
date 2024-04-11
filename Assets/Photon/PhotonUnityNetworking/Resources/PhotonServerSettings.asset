@@ -103,6 +103,8 @@ MonoBehaviour:
   - ResetJumpScare
   - JumpScare
   - GetMessage
+  - OpenChat
+  - HaveMessage
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
