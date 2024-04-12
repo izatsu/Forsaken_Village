@@ -301,8 +301,7 @@ public class UIController : MonoBehaviourPunCallbacks
     }
     public void ButtonExitErrorScreen()
     {
-        CloseAllScreen();
-        OpenScreen(mainScreen);
+        errorScreen.SetActive(false);
     }
     public void ButtonHelpAndGuild()
     {
