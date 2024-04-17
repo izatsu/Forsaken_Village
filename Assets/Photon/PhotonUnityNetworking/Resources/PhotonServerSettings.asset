@@ -105,6 +105,11 @@ MonoBehaviour:
   - GetMessage
   - OpenChat
   - HaveMessage
+  - PlaySound
+  - PlaySoundFire
+  - CheckBook
+  - AddBook
+  - FullBook
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

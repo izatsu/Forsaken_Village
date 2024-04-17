@@ -14,7 +14,7 @@ public class UIinGame : MonoBehaviourPunCallbacks
     [Header("PanelAUS")]
     public GameObject AUSPanel;
 
-    bool checkActive = false;
+    public bool checkActive = false;
 
     private void Start()
     {

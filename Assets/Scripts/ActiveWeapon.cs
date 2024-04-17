@@ -27,6 +27,9 @@ public class ActiveWeapon : MonoBehaviour
 
     private PhotonView _view;
 
+    private Chat _chat; 
+    private UIinGame _uiInGame;
+    
     void Start()
     {
         _view = GetComponent<PhotonView>();
@@ -39,11 +42,14 @@ public class ActiveWeapon : MonoBehaviour
             Equip(existWeapon);
         }
 
+        _chat = GameObject.FindGameObjectWithTag("UIGame").GetComponent<Chat>();
+        _uiInGame = GameObject.FindGameObjectWithTag("UIGame").GetComponent<UIinGame>();
     }
 
     void Update()
     {
-        if (_view.IsMine)
+        if(_chat == null || _uiInGame == null) return;
+        if (_view.IsMine && !_chat.chating && !_uiInGame.checkActive)
         {
             var weapon = Getweapon(_activeWeaponIndex);
             if (weapon) 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Chat : MonoBehaviour
@@ -14,7 +15,7 @@ public class Chat : MonoBehaviour
 
     private PhotonView _view;
 
-    private bool _chating = false;
+    [FormerlySerializedAs("_chating")] public bool chating = false;
     
     private bool _hasMessage = false;
     private float _timeShowMessage = 5f; 
@@ -26,16 +27,16 @@ public class Chat : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && !_chating)
+        if (Input.GetKeyDown(KeyCode.Return) && !chating)
         {
             OpenChat();
-            _chating = true;
+            chating = true;
             _hasMessage = false;
         }
-        else if(Input.GetKeyDown(KeyCode.Return) && _chating)
+        else if(Input.GetKeyDown(KeyCode.Return) && chating)
         {
             SendMessage();
-            _chating = false;
+            chating = false;
             //HaveMessage();
             _view.RPC(nameof(HaveMessage), RpcTarget.AllBuffered);
         }
@@ -64,8 +65,8 @@ public class Chat : MonoBehaviour
     [PunRPC]
     private void GetMessage(string receiveMessage)
     {
-        GameObject mess =  Instantiate(message, content.transform);
-        mess.GetComponent<Message>().myMessage.text = receiveMessage; 
+        GameObject mess = Instantiate(message, content.transform);
+        mess.GetComponent<Message>().myMessage.text = receiveMessage;
         //scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0f;;
         StartCoroutine(ScrollToBottom());
     }

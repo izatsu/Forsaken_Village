@@ -196,9 +196,11 @@ public class Interact : MonoBehaviour
                         var matchingBook = prayComponent.books.FirstOrDefault(a => a.id == book.id);
                         if (matchingBook != null)
                         {
-                            prayComponent.countAcitveBook++;
+                            //prayComponent.countAcitveBook++;
+                            //Pray.instance.AddBook();
                             //matchingBook.gameObject.SetActive(true);
                             prayComponent.SetActiveBook(matchingBook.id);
+                            //prayComponent.AddBook();
                             books.Remove(book);
                             CountBook();
                             break;
