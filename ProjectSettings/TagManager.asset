@@ -20,6 +20,7 @@ TagManager:
   - TextKey
   - TextBook
   - Note
+  - UIGame
   layers:
   - Default
   - TransparentFX

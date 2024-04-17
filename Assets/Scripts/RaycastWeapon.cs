@@ -128,7 +128,9 @@ public class RaycastWeapon : MonoBehaviour
         _view.RPC(nameof(MuzzelFlashGun), RpcTarget.All);
 
         Vector3 velocity = (raycastDestination.position - raycastOrigin.position).normalized * bulletSpeed;
-        PlaySound(soundFire);
+        
+        _view.RPC(nameof(PlaySoundFire), RpcTarget.AllBuffered);
+        //PlaySound(soundFire);
         var bullet = CreateBullet(raycastOrigin.position, velocity);
         _bullets.Add(bullet);
 
@@ -230,10 +232,17 @@ public class RaycastWeapon : MonoBehaviour
     {
         _bullets.RemoveAll(bullet => bullet.time >= _maxLifeTime );
     }
-
+    
     public void PlaySound(AudioClip audioClip)
     {
         _audioSource.clip = audioClip; 
+        _audioSource.Play();
+    }
+    
+    [PunRPC]
+    public void PlaySoundFire()
+    {
+        _audioSource.clip = soundFire; 
         _audioSource.Play();
     }
 }
