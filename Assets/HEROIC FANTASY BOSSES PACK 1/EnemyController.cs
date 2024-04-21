@@ -17,9 +17,13 @@ public class EnemyController : MonoBehaviourPunCallbacks
     [SerializeField] float returnTimeOutSize = 20f;
 
     [Header("Attack Settings")]
-    [SerializeField] float attackRange1 = 3f;
+    [SerializeField] float attackRange = 3f;
     [SerializeField] float attackRange2 = 5f;
-    [SerializeField] float attackCooldown = 1f;
+    [SerializeField] float attackCooldown = 3f;
+    [SerializeField] float comboAttackCooldown = 2f;
+    [SerializeField] float comboAttackDuration = 2.5f;
+    [SerializeField] float attackSkillCooldown = 10f;
+
 
 
     [Header("Animation")]
@@ -41,6 +45,11 @@ public class EnemyController : MonoBehaviourPunCallbacks
 
     bool isAttacking;
     float lastAttackTime;
+
+    private bool isComboAttacking;
+    private bool canRandomAttack = true;
+    private float lastAttackSkillTime;
+
 
 
     [Header("Sound VFX")] 
@@ -175,17 +184,17 @@ public class EnemyController : MonoBehaviourPunCallbacks
             }
         }
 
-        //Sau khi lay duoc player gan nhat thi tan cong
         if (nearestPlayer != null && !EnemyState.instance.isDie)
         {
-            //navMeshAgent.SetDestination(nearestPlayer.transform.position);
-            if (minDistance <= attackRange1 && Time.time - lastAttackTime > attackCooldown)
+
+            if (!isComboAttacking && canRandomAttack && minDistance <= attackRange && Time.time - lastAttackTime > attackCooldown && !isAttacking)
             {
-                Attack(1,nearestPlayer.transform);
+                int randomAttack = Random.Range(1, 5);
+                Attack(randomAttack,nearestPlayer.transform);
             }
-            else if (minDistance > attackRange1 && minDistance <= attackRange2)
+            else if (minDistance <= attackRange && Time.time - lastAttackSkillTime > attackSkillCooldown && !isAttacking) // Ki?m tra cooldown cho k? n?ng t?n công
             {
-                Attack(2,nearestPlayer.transform);
+                UseAttackSkill();
             }
             else
             {
@@ -200,9 +209,22 @@ public class EnemyController : MonoBehaviourPunCallbacks
         {
             isAttacking = true;
             navMeshAgent.isStopped = true;
-            StartCoroutine(AttackAnimationCoroutine(attackType,playerTransform));
+            StartCoroutine(AttackAnimationCoroutine(attackType, playerTransform));
         }
-       // navMeshAgent.SetDestination(playerTransform.position);
+        // navMeshAgent.SetDestination(playerTransform.position);
+    }
+    private IEnumerator UseAttackSkill()
+    {
+        animator.SetBool("AttackSkill", true);
+        GameObject vfxSkill = Instantiate(vfxEnemySkill, vfxEnemySkillTransform.position, Quaternion.identity);
+        Destroy(vfxSkill, 5);
+        yield return new WaitForSeconds(2.5f);
+        GameObject attackVFX = Instantiate(vfxAttackPrefab, vfxTarget.position, Quaternion.identity);
+        attackVFX.transform.forward = transform.forward;
+        //GameObject attackVFX = Instantiate(vfxAttackPrefab, transform.position, Quaternion.identity);
+        Destroy(attackVFX, 5);
+        lastAttackSkillTime = Time.time;
+        animator.SetBool("AttackSkill", false);
     }
 
     IEnumerator AttackAnimationCoroutine(int attackType, Transform playerTransform)
@@ -217,23 +239,28 @@ public class EnemyController : MonoBehaviourPunCallbacks
         else if (attackType == 2)
         {
             animator.SetBool("Attack2", true);
-            GameObject vfxSkill = Instantiate(vfxEnemySkill, vfxEnemySkillTransform.position, Quaternion.identity);
-            Destroy(vfxSkill, 5);
-            yield return new WaitForSeconds(2.5f);
-            GameObject attackVFX = Instantiate(vfxAttackPrefab, vfxTarget.position, Quaternion.identity);
-            attackVFX.transform.forward = transform.forward;
-            //GameObject attackVFX = Instantiate(vfxAttackPrefab, transform.position, Quaternion.identity);
-            Destroy(attackVFX, 5);
         }
+        else if (attackType == 3)
+        {
+            animator.SetBool("Attack3", true);
+        }
+        else if (attackType == 4)
+        {
+            animator.SetBool("AttackCombo", true);
+        }
+
+
 
         yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
 
         // Dat lai animation va tiep tuc di chuyen theo diem
         animator.SetBool("Attack1", false);
         animator.SetBool("Attack2", false);
+        animator.SetBool("Attack3", false);
+        animator.SetBool("AttackCombo",false);
         isAttacking = false;
         navMeshAgent.isStopped = false;
-        // lastAttackTime = Time.time;
+        lastAttackTime = Time.time;
         lookAtTargetScript.SetTarget(null);
     }
 
