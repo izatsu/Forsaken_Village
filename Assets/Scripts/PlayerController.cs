@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private AudioClip soundFootStep;
     [SerializeField] private AudioClip soundRun;
+
+
+    [Header("CheckUI")] 
+    private Chat _chat;
+    private UIinGame _uiInGame;
     
     
     private void Awake()
@@ -80,6 +85,9 @@ public class PlayerController : MonoBehaviour
         PlayerManager.instance.AddPlayer(gameObject);
         
         _view.RPC(nameof(SetName), RpcTarget.AllBuffered);
+
+        _chat = GameObject.FindGameObjectWithTag("UIGame").GetComponent<Chat>();
+        _uiInGame = GameObject.FindGameObjectWithTag("UIGame").GetComponent<UIinGame>();
     }
 
     [PunRPC]
@@ -101,7 +109,17 @@ public class PlayerController : MonoBehaviour
     
     private void Update()
     {
-        if (_view.IsMine)
+        if(_chat == null || _uiInGame == null) return;
+        if (_chat.chating || _uiInGame.checkActive)
+        {
+            _horizontal = 0;
+            _vertical = 0;
+            _anim.SetFloat("Horizontal", _horizontal);
+            _anim.SetFloat("Vertical", _vertical);
+            
+            _audioSource.enabled = false;
+        }
+        if (_view.IsMine && !_chat.chating && !_uiInGame.checkActive)
         {
             _horizontal = Input.GetAxis("Horizontal");
             _vertical = Input.GetAxis("Vertical");
