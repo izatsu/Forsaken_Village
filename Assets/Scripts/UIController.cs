@@ -219,7 +219,7 @@ public class UIController : MonoBehaviourPunCallbacks
         };
         PhotonNetwork.CreateRoom(roomName, roomOptions);
         
-        textRoomName.text = roomName; 
+        textRoomName.text =$"ROOM NAME: {roomName}"; 
         
         
         
