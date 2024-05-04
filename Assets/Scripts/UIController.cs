@@ -25,7 +25,7 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject errorScreen;
     public TMP_InputField inputNickname; 
 
-    [Header("Màn hình trong Phòng")] 
+    [Header("Màn hình trong phòng")] 
     public GameObject roomDetailScreen; 
     public TextMeshProUGUI textOneNickname;
     public List<TextMeshProUGUI> nicknames = new();
@@ -40,8 +40,11 @@ public class UIController : MonoBehaviourPunCallbacks
     [Header("Màn hình Help&Guild")]
     public GameObject helpGuildScreen;
 
-    [Header("Màn hình setting")]
+    [Header("Màn hình Setting")]
     public GameObject settingScreen;
+
+    [Header("Màn hình Exit?")]
+    public GameObject exitPanelScreen;
     
     private PhotonView _view;
     
@@ -78,6 +81,7 @@ public class UIController : MonoBehaviourPunCallbacks
         settingScreen.SetActive(false);
         errorScreen.SetActive(false);
         helpGuildScreen.SetActive(false);
+        exitPanelScreen.SetActive(false);
     }
 
     private void ShowAllPLayer()
@@ -312,6 +316,18 @@ public class UIController : MonoBehaviourPunCallbacks
     {
         CloseAllScreen();
         OpenScreen(mainScreen);
+    }
+    public void ButtonExitGame()
+    {
+        exitPanelScreen.SetActive(true);
+    }
+    public void ButtonNoExitGame()
+    {
+        exitPanelScreen.SetActive(false);
+    }
+    public void ButtonYesExitGame()
+    {
+        Application.Quit();
     }
     #endregion
 }
