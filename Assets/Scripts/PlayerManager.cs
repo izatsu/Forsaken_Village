@@ -34,11 +34,14 @@ public class PlayerManager : MonoBehaviour
             //_view.RPC(nameof(GameOver), RpcTarget.AllBuffered);
             isGameOver = true;
             isOnUIGameOver = true;
-            AudioListener.pause = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            AudioListener.pause = true;          
             Time.timeScale = 0;
             uiGameOver.SetActive(true);
+        }
+        if(isOnUIGameOver)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
             
         

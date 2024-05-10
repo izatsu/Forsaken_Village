@@ -219,8 +219,8 @@ public class Interact : MonoBehaviour
             if (hitInfo.transform.tag == "Note")
             {
                 hitInfo.transform.GetComponent<NotePaper>().SetUIOn();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                /*Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;*/
             }
         }
     }
