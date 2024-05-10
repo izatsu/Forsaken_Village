@@ -45,7 +45,10 @@ public class UIController : MonoBehaviourPunCallbacks
 
     [Header("Màn hình Exit?")]
     public GameObject exitPanelScreen;
-    
+
+    [Header("Màn hình Credits")]
+    public GameObject creditsPanelScreen;
+
     private PhotonView _view;
     
     private void Awake()
@@ -82,6 +85,7 @@ public class UIController : MonoBehaviourPunCallbacks
         errorScreen.SetActive(false);
         helpGuildScreen.SetActive(false);
         exitPanelScreen.SetActive(false);
+        creditsPanelScreen.SetActive(false);
     }
 
     private void ShowAllPLayer()
@@ -328,6 +332,16 @@ public class UIController : MonoBehaviourPunCallbacks
     public void ButtonYesExitGame()
     {
         Application.Quit();
+    }
+    public void ButtonCredits()
+    {
+        CloseAllScreen();
+        OpenScreen(creditsPanelScreen);
+    }
+    public void ButtonExitCredits()
+    {
+        CloseAllScreen();
+        OpenScreen(mainScreen);
     }
     #endregion
 }

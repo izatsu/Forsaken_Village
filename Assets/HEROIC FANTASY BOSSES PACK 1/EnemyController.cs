@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
 
     [Header("Attack Settings")]
     [SerializeField] float attackRange = 3f;
-    [SerializeField] float attackRange2 = 5f;
+    [SerializeField] float attackRange2 = 7f;
     [SerializeField] float attackCooldown = 3f;
     [SerializeField] float comboAttackCooldown = 2f;
     [SerializeField] float comboAttackDuration = 2.5f;
@@ -192,7 +192,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
                 int randomAttack = Random.Range(1, 5);
                 Attack(randomAttack,nearestPlayer.transform);
             }
-            else if (minDistance <= attackRange && Time.time - lastAttackSkillTime > attackSkillCooldown && !isAttacking) // Ki?m tra cooldown cho k? n?ng t?n công
+            else if (minDistance <= attackRange2 && Time.time - lastAttackSkillTime > attackSkillCooldown && !isAttacking)
             {
                 UseAttackSkill();
             }

@@ -38,16 +38,18 @@ public class UIinGame : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             checkActive = !checkActive;
+
+            if (checkActive)
+            {
+                OpenPanelSetting();
+            }
+            else
+            {
+                ClosePanelSetting();
+                ClosePanelAUS();
+            }
         }
-        if (checkActive)
-        {
-            OpenPanelSetting();
-        }
-        else
-        {
-            ClosePanelSetting();
-            ClosePanelAUS();
-        }
+      
             
     }
     public void OpenPanelSetting()
