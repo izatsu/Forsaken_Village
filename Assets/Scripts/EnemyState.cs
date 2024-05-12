@@ -62,8 +62,7 @@ public class EnemyState : MonoBehaviour
         }
         else
         {
-            currentHealth -= damage;
-            healthbar.value = currentHealth;
+            _view.RPC(nameof(Attacked), RpcTarget.AllBuffered, damage);
 
             if (currentHealth <= 0)
             {
@@ -80,7 +79,12 @@ public class EnemyState : MonoBehaviour
         _animator.SetBool("isDie", true);
         Invoke(nameof(SetActiveBoss), 5f);
     }
-
+    [PunRPC]
+    private void Attacked(int damage)
+    {
+        currentHealth -= damage;
+        healthbar.value = currentHealth;
+    }
     private void SetActiveBoss()
     {
         this.gameObject.SetActive(false);

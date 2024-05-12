@@ -43,10 +43,10 @@ public class PlayerManager : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-            
-        
+
+
         ResetPlayerDead();
-        
+
     }
 
     public void AddPlayer(GameObject player)
@@ -58,6 +58,7 @@ public class PlayerManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         Debug.Log("Da hoi sinh");
+        
         countPlayerDie--;
         Transform pointSpawn = SpawnManager.instance.GetSpawnPointPlayer();
         player.transform.position = pointSpawn.position;
