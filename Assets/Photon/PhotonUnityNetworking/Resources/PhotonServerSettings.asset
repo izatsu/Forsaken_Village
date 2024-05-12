@@ -110,6 +110,7 @@ MonoBehaviour:
   - CheckBook
   - AddBook
   - FullBook
+  - Attacked
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

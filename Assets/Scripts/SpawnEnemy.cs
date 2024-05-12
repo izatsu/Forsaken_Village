@@ -20,7 +20,7 @@ public class SpawnEnemy : MonoBehaviour
     [PunRPC]
     private void ActiveBoss()
     {
-        Invoke(nameof(SetActiveBoss), 180f);
+        Invoke(nameof(SetActiveBoss), 60f);
     }
     
     private void SetActiveBoss()
