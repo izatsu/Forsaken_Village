@@ -133,7 +133,10 @@ public class UIController : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         CloseAllScreen();
-        OpenScreen(createNicknameScreen);
+        if(PhotonNetwork.NickName == "")
+            OpenScreen(createNicknameScreen);
+        else
+            OpenScreen(mainScreen);
     }
 
     // Chạy khi tạo phòng thất bại
