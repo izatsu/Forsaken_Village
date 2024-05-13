@@ -79,6 +79,9 @@ public class PlayerManager : MonoBehaviour
                     StartCoroutine(DeadAction(player, player.GetComponent<PlayerCamera>().newCam));
                 }
             }
+
+            if (countPlayerDie < players.Count)
+                countPlayerDie = 0;
         }
     }
 }
