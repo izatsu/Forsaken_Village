@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if ((players.Count > 0) && (countPlayerDie >= players.Count) && !isOnUIGameOver)
+        if ((players.Count > 0) && (countPlayerDie >= PhotonNetwork.CurrentRoom.PlayerCount) && !isOnUIGameOver)
         {
             //_view.RPC(nameof(GameOver), RpcTarget.AllBuffered);
             isGameOver = true;
@@ -80,7 +80,7 @@ public class PlayerManager : MonoBehaviour
                 }
             }
 
-            if (countPlayerDie < players.Count)
+            if (countPlayerDie < PhotonNetwork.CurrentRoom.PlayerCount)
                 countPlayerDie = 0;
         }
     }
