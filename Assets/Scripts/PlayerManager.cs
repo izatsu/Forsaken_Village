@@ -75,7 +75,7 @@ public class PlayerManager : MonoBehaviour
                 if (player.GetComponent<PlayerState>().isDie == true)
                 {
                     countPlayerDie++;
-                    player.GetComponent<PlayerState>().isDie = false;
+                    /*player.GetComponent<PlayerState>().isDie = false;*/
                     StartCoroutine(DeadAction(player, player.GetComponent<PlayerCamera>().newCam));
                 }
             }
