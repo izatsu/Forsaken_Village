@@ -29,6 +29,7 @@ public class ActiveWeapon : MonoBehaviour
 
     private Chat _chat; 
     private UIinGame _uiInGame;
+    private PlayerState _playerState;
     
     void Start()
     {
@@ -44,12 +45,15 @@ public class ActiveWeapon : MonoBehaviour
 
         _chat = GameObject.FindGameObjectWithTag("UIGame").GetComponent<Chat>();
         _uiInGame = GameObject.FindGameObjectWithTag("UIGame").GetComponent<UIinGame>();
+
+        _playerState = GetComponent<PlayerState>();
     }
 
     void Update()
     {
+        if(_playerState.isDie) return;
         if(_chat == null || _uiInGame == null) return;
-        if (_view.IsMine && !_chat.chating && !_uiInGame.checkActive)
+        if (_view.IsMine && !_chat.chating && !_uiInGame.checkActive && !_playerState.isDie)
         {
             var weapon = Getweapon(_activeWeaponIndex);
             if (weapon) 

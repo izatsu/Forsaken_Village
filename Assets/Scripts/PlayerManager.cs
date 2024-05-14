@@ -56,7 +56,7 @@ public class PlayerManager : MonoBehaviour
     
     public IEnumerator DeadAction(GameObject player, GameObject cam)
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(20f);
         Debug.Log("Da hoi sinh");
         
         countPlayerDie--;

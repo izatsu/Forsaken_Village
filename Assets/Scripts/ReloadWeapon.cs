@@ -16,12 +16,15 @@ public class ReloadWeapon : MonoBehaviour
     
     [SerializeField] private AudioClip soundReload;
 
-    private PhotonView _view; 
+    private PhotonView _view;
+
+    private PlayerState _playerState; 
     
     private void Start()
     {
         _view = GetComponent<PhotonView>();
         animationEvents.weaponAnimationEvent.AddListener(OnAnimationEvent);
+        _playerState = GetComponent<PlayerState>();
     }
 
     private void Update()
@@ -31,11 +34,12 @@ public class ReloadWeapon : MonoBehaviour
             RaycastWeapon weapon = activeWeapon.GetActiveWeapon();
             if (weapon)
             {
-                if ((Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <= 0) && weapon.ammoCount != weapon.clipSize)
+                if ((Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <= 0) && weapon.ammoCount != weapon.clipSize && !_playerState.isDie)
                 {
                     weapon.PlaySound(soundReload);
                     //rigController.SetTrigger("reload_Weapon");
                     PlayReload();
+                    Debug.Log("Nap dan");
                 
                 }
             }
@@ -69,8 +73,10 @@ public class ReloadWeapon : MonoBehaviour
 
     [PunRPC]
     private void PlayReload()
-    {
+    {   
+        if(_playerState.isDie) return;
         rigController.SetTrigger("reload_Weapon");
+        Debug.Log("Da chay anim nap");
     }
 
     private void StopFiring()
