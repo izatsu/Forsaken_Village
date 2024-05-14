@@ -30,12 +30,14 @@ public class PlayerState : MonoBehaviour
     {
         if(textDie != null)
             textDie.SetActive(false);
+        isDie = false;
     }
 
     private void OnDisable()
     {
         if(textDie != null)
             textDie.SetActive(true);
+        isDie = true;
     }
 
     private void Awake()
