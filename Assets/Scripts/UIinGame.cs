@@ -14,15 +14,34 @@ public class UIinGame : MonoBehaviourPunCallbacks
     [Header("PanelAUS")]
     public GameObject AUSPanel;
 
+    public GameObject cutsceneIntro;
+
+    public bool setCutsceneIntro = true;
+    public bool checkCutscene = false;
     public bool checkActive = false;
 
     private void Start()
     {
         ClosePanelSetting();
         ClosePanelAUS();
+        cutsceneIntro.SetActive(true);
+        Invoke(nameof(SkipCutsceneIntro), 64f);
     }
     private void Update()
     {
+        if(setCutsceneIntro)
+        {
+            checkActive = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            return;
+        }
+        if(!setCutsceneIntro && !checkCutscene)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
+            checkCutscene = true;
+        }
         PanelSetting();
     }
     public void ButtonLeave()
@@ -72,6 +91,12 @@ public class UIinGame : MonoBehaviourPunCallbacks
     public void ClosePanelAUS()
     {
         AUSPanel.SetActive(false);
+    }
+    public void SkipCutsceneIntro()
+    {
+        checkActive = false;
+        cutsceneIntro.SetActive(false);
+        setCutsceneIntro = false;
     }
 
 }
