@@ -14,6 +14,7 @@ public class UIinGame : MonoBehaviourPunCallbacks
     [Header("PanelAUS")]
     public GameObject AUSPanel;
 
+
     public GameObject cutsceneIntro;
 
     public bool setCutsceneIntro = true;

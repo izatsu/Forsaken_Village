@@ -35,6 +35,8 @@ public class Interact : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip soundPickKey;
 
+    public GameObject uiInteract;
+
     private void Start()
     {
         _view = GetComponent<PhotonView>();
@@ -50,6 +52,20 @@ public class Interact : MonoBehaviour
 
     private void Update()
     {
+        RaycastHit hitInfo;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, _distance))
+        {
+            if (hitInfo.transform.tag == "Key" || hitInfo.transform.tag == "Door" || hitInfo.transform.tag == "Book"
+                || hitInfo.transform.tag == "Note" || hitInfo.transform.tag == "Chest")
+            {
+                uiInteract.SetActive(true);
+            }
+            else
+            {
+                uiInteract.SetActive(false);
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.E) && _view.IsMine)
         {
             _view.RPC(nameof(PickUpKey), RpcTarget.AllBuffered);
@@ -59,6 +75,7 @@ public class Interact : MonoBehaviour
             _view.RPC(nameof(OpenChest), RpcTarget.AllBuffered);
             PickUpNote();
         }
+
     }
 
     private void CountKey()
