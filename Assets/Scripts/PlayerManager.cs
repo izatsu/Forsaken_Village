@@ -57,13 +57,16 @@ public class PlayerManager : MonoBehaviour
     public IEnumerator DeadAction(GameObject player, GameObject cam)
     {
         yield return new WaitForSeconds(20f);
-        Debug.Log("Da hoi sinh");
-        player.GetComponent<PlayerState>().isDie = false;
-        countPlayerDie--;
-        Transform pointSpawn = SpawnManager.instance.GetSpawnPointPlayer();
-        player.transform.position = pointSpawn.position;
-        cam.SetActive(true);
-        player.SetActive(true);
+        if (player.GetComponent<PlayerState>().isDie == true)
+        {
+            Debug.Log("Da hoi sinh");
+            player.GetComponent<PlayerState>().isDie = false;
+            countPlayerDie--;
+            Transform pointSpawn = SpawnManager.instance.GetSpawnPointPlayer();
+            player.transform.position = pointSpawn.position;
+            cam.SetActive(true);
+            player.SetActive(true);
+        } 
     }
 
     private void ResetPlayerDead()
