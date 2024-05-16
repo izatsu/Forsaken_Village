@@ -58,7 +58,7 @@ public class PlayerManager : MonoBehaviour
     {
         yield return new WaitForSeconds(20f);
         Debug.Log("Da hoi sinh");
-        
+        player.GetComponent<PlayerState>().isDie = false;
         countPlayerDie--;
         Transform pointSpawn = SpawnManager.instance.GetSpawnPointPlayer();
         player.transform.position = pointSpawn.position;
