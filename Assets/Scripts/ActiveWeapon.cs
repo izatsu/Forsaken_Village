@@ -53,7 +53,7 @@ public class ActiveWeapon : MonoBehaviour
     {
         if(_playerState.isDie) return;
         if(_chat == null || _uiInGame == null) return;
-        if (_view.IsMine && !_chat.chating && !_uiInGame.checkActive && !_playerState.isDie)
+        if (_view.IsMine && !_chat.chating && !_uiInGame.checkActive && !_playerState.isDie && !Portal.instance.winGame)
         {
             var weapon = Getweapon(_activeWeaponIndex);
             if (weapon) 
