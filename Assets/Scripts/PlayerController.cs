@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if(_chat == null || _uiInGame == null) return;
-        if (_chat.chating || _uiInGame.checkActive)
+        if (_chat.chating || _uiInGame.checkActive || Portal.instance.winGame)
         {
             _horizontal = 0;
             _vertical = 0;
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
             
             _audioSource.enabled = false;
         }
-        if (_view.IsMine && !_chat.chating && !_uiInGame.checkActive)
+        if (_view.IsMine && !_chat.chating && !_uiInGame.checkActive && !Portal.instance.winGame)
         {
             _horizontal = Input.GetAxis("Horizontal");
             _vertical = Input.GetAxis("Vertical");
