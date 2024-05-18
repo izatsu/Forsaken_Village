@@ -47,7 +47,7 @@ public class EnemyState : MonoBehaviour
         {
             healthbar.gameObject.SetActive(true);
         }
-        else
+        else if(!PlayerInVisionRange() || isDie)
         {
             healthbar.gameObject.SetActive(false);
         }
