@@ -56,7 +56,7 @@ public class Interact : MonoBehaviour
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, _distance))
         {
             if (hitInfo.transform.tag == "Key" || hitInfo.transform.tag == "Door" || hitInfo.transform.tag == "Book"
-                || hitInfo.transform.tag == "Note" || hitInfo.transform.tag == "Chest")
+                || hitInfo.transform.tag == "Note" || hitInfo.transform.tag == "Chest" || hitInfo.transform.CompareTag("Pray"))
             {
                 uiInteract.SetActive(true);
             }
