@@ -1,26 +1,46 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class WinGame : MonoBehaviour
 {
-    public bool isOnUIWinGame = false;
-    public GameObject uiWinGame;
-    
-    private void Update()
+
+    private PhotonView _view;
+
+    public GameObject Portal;
+    private bool _isOpen = false;
+
+    public bool winGame = false;
+
+    public GameObject videoPortalCut;
+
+    private void Start()
     {
-        if (EnemyState.instance.isDie && !isOnUIWinGame)
-        {
-            isOnUIWinGame = true;
-            Invoke(nameof(SetActiveUI), 7f);
-        } 
+        _view = GetComponent<PhotonView>();
+        Portal.SetActive(false);
     }
 
-    private void SetActiveUI()
+    private void Update()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        uiWinGame.SetActive(true);
+        if (EnemyState.instance.isDie && !_isOpen)
+        {
+            _isOpen = true;
+            _view.RPC(nameof(SetActive), RpcTarget.AllBuffered);
+            videoPortalCut.SetActive(true);
+            Invoke(nameof(TurnOffVideo), 7f);
+        }
+
+    }
+    private void TurnOffVideo()
+    {
+        videoPortalCut.SetActive(false);
+    }
+
+    [PunRPC]
+    private void SetActive()
+    {
+        Portal.SetActive(true);
     }
 }
