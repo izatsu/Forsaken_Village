@@ -49,7 +49,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
     private bool isComboAttacking;
     private bool canRandomAttack = true;
     private float lastAttackSkillTime;
-
+    public bool checkAttackSkill = false;
 
 
     [Header("Sound VFX")] 
@@ -58,7 +58,8 @@ public class EnemyController : MonoBehaviourPunCallbacks
     [SerializeField] private AudioClip soundMoveToPlayer;
 
     public Pray pray;
-    
+
+     public float timeDelayAttack = 10f;
 
     void Start()
     {
@@ -186,15 +187,27 @@ public class EnemyController : MonoBehaviourPunCallbacks
 
         if (nearestPlayer != null && !EnemyState.instance.isDie)
         {
-
-            if (!isComboAttacking && canRandomAttack && minDistance <= attackRange && Time.time - lastAttackTime > attackCooldown && !isAttacking)
+            timeDelayAttack -= Time.deltaTime;
+            if (timeDelayAttack <= 0)
             {
-                int randomAttack = Random.Range(1, 5);
-                Attack(randomAttack,nearestPlayer.transform);
+                checkAttackSkill = true;
+                timeDelayAttack = 10f;
             }
-            else if (minDistance <= attackRange2 && Time.time - lastAttackSkillTime > attackSkillCooldown && !isAttacking)
+
+            if (!isComboAttacking && canRandomAttack && minDistance <= attackRange && Time.time - lastAttackTime > attackCooldown && !isAttacking && !checkAttackSkill)
             {
-                UseAttackSkill();
+
+                int randomAttack = Random.Range(1, 5);
+                Attack(randomAttack, nearestPlayer.transform);
+                
+
+            }
+            else if (minDistance > attackRange && Time.time - lastAttackSkillTime > attackSkillCooldown && !isAttacking && checkAttackSkill)
+            {
+                Debug.Log("Da danh tam xa");
+                StartCoroutine(UseAttackSkill());
+                checkAttackSkill = false;
+                
             }
             else
             {
@@ -219,7 +232,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
         GameObject vfxSkill = Instantiate(vfxEnemySkill, vfxEnemySkillTransform.position, Quaternion.identity);
         Destroy(vfxSkill, 5);
         yield return new WaitForSeconds(2.5f);
-        GameObject attackVFX = Instantiate(vfxAttackPrefab, vfxTarget.position, Quaternion.identity);
+        GameObject attackVFX = Instantiate(vfxAttackPrefab, transform.position, Quaternion.identity);
         attackVFX.transform.forward = transform.forward;
         //GameObject attackVFX = Instantiate(vfxAttackPrefab, transform.position, Quaternion.identity);
         Destroy(attackVFX, 5);

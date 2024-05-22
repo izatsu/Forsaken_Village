@@ -14,7 +14,6 @@ public class Pray : MonoBehaviour
     private PhotonView _view;
 
     public bool checkBookFull = false;
-
     private void Start()
     {
         /*if (instance == null)
@@ -26,6 +25,7 @@ public class Pray : MonoBehaviour
             Destroy(this.gameObject);
         }*/
         _view = GetComponent<PhotonView>();
+        
     }
 
     private void Update()
