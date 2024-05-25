@@ -191,7 +191,7 @@ public class EnemyController : MonoBehaviourPunCallbacks
             if (timeDelayAttack <= 0)
             {
                 checkAttackSkill = true;
-                timeDelayAttack = 10f;
+                timeDelayAttack = 5f;
             }
 
             if (!isComboAttacking && canRandomAttack && minDistance <= attackRange && Time.time - lastAttackTime > attackCooldown && !isAttacking && !checkAttackSkill)
@@ -199,10 +199,10 @@ public class EnemyController : MonoBehaviourPunCallbacks
 
                 int randomAttack = Random.Range(1, 5);
                 Attack(randomAttack, nearestPlayer.transform);
-                
+                timeDelayAttack = 5f;
 
             }
-            else if (minDistance > attackRange && Time.time - lastAttackSkillTime > attackSkillCooldown && !isAttacking && checkAttackSkill)
+            else if (/*minDistance > attackRange &&*/ Time.time - lastAttackSkillTime > attackSkillCooldown && !isAttacking && checkAttackSkill)
             {
                 Debug.Log("Da danh tam xa");
                 StartCoroutine(UseAttackSkill());
@@ -229,10 +229,10 @@ public class EnemyController : MonoBehaviourPunCallbacks
     private IEnumerator UseAttackSkill()
     {
         animator.SetBool("AttackSkill", true);
-        GameObject vfxSkill = Instantiate(vfxEnemySkill, vfxEnemySkillTransform.position, Quaternion.identity);
+        GameObject vfxSkill = Instantiate(vfxEnemySkill, transform.position, Quaternion.identity);
         Destroy(vfxSkill, 5);
         yield return new WaitForSeconds(2.5f);
-        GameObject attackVFX = Instantiate(vfxAttackPrefab, transform.position, Quaternion.identity);
+        GameObject attackVFX = Instantiate(vfxAttackPrefab, vfxTarget.position, Quaternion.identity);
         attackVFX.transform.forward = transform.forward;
         //GameObject attackVFX = Instantiate(vfxAttackPrefab, transform.position, Quaternion.identity);
         Destroy(attackVFX, 5);
