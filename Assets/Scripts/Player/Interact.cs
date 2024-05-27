@@ -17,7 +17,7 @@ public class Interact : MonoBehaviour
         public int id; 
     }
 
-    private float _distance = 6f;
+    private float _distance = 3f;
 
     public List<Key> keys;
     public List<Book> books;
