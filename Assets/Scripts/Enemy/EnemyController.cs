@@ -16,9 +16,8 @@ public class EnemyController : MonoBehaviourPunCallbacks
     [SerializeField] float visionRange = 5f;
     [SerializeField] float returnTimeOutSize = 20f;
 
-    [Header("Attack Settings")]
-    [SerializeField] float attackRange = 3f;
-    [SerializeField] float attackRange2 = 7f;
+    [Header("Attack Settings")] [SerializeField]
+    private float attackRange = 3f;
     [SerializeField] float attackCooldown = 3f;
     [SerializeField] float comboAttackCooldown = 2f;
     [SerializeField] float comboAttackDuration = 2.5f;
